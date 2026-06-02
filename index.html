@@ -122,23 +122,18 @@
     <script>
         lucide.createIcons();
 
-        // ATIVOS COM ONDE ENCONTRAR REAL DA PLANILHA
+        // ATIVOS COM NÍVEL MÍNIMO DE APORTE - NÃO MOSTRA CRIPTO PRA R$ 100
         const carteiraCompleta = [
-            { nome: 'CPTS11 - CAPITÂNIA SECURITIES II', subtipo: 'CPTS11', categoria: 'FII', preco: 8.42, aplicacaoMinima: 8.42, peso: 25, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 8.90, dy: 13.26 },
-            { nome: 'ITSA4 - ITAÚSA', subtipo: 'ITSA4', categoria: 'Ação', preco: 9.82, aplicacaoMinima: 9.82, peso: 20, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 11.00, dy: 7.8 },
-            { nome: 'PSEC11 - PÁTRIA SECURITIES', subtipo: 'PSEC11', categoria: 'FII', preco: 9.75, aplicacaoMinima: 9.75, peso: 15, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 81.00, dy: 13.23 },
-            { nome: 'BBSE3 - BB SEGURIDADE', subtipo: 'BBSE3', categoria: 'Ação', preco: 33.85, aplicacaoMinima: 33.85, peso: 20, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 36.00, dy: 8.5 },
-            { nome: 'SLCE3 - SLC AGRÍCOLA', subtipo: 'SLCE3', categoria: 'Ação', preco: 18.30, aplicacaoMinima: 18.30, peso: 10, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 20.00, dy: 4.2 },
-            { nome: 'GOLD11 - GOLD ETF', subtipo: 'Internacional', categoria: 'ETF', preco: 11.95, aplicacaoMinima: 11.95, peso: 5, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: null, dy: null },
-            { nome: 'CMIG4 - CEMIG', subtipo: 'CMIG4', categoria: 'Ação', preco: 11.45, aplicacaoMinima: 11.45, peso: 5, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 13.00, dy: 9.1 },
-            { nome: 'ACE CAPITAL', subtipo: 'Multimercado', categoria: 'Fundo', aplicacaoMinima: 1, peso: 0, ondeEncontrar: 'Ágora, Banco Inter, BB, BTG, C6, Genial, Itaú, NuInvest, Pi/Toro, Safra e XP', precoMaximo: null, dy: null },
-            { nome: 'VALORA VANGUARD', subtipo: '', categoria: 'Fundo', aplicacaoMinima: 100, peso: 0, ondeEncontrar: 'BTG, ITAÚ e XP', precoMaximo: null, dy: null },
-            { nome: 'GENOA CAPITAL RADAR', subtipo: 'Multimercado', categoria: 'Fundo', aplicacaoMinima: 500, peso: 0, ondeEncontrar: 'Ágora, Banco Inter, BTG, Genial, Guide, Itaú, NuInvest, Pi/Toro, Safra e XP', precoMaximo: null, dy: null },
-            { nome: 'DAHLIA TOTAL RETURN', subtipo: '', categoria: 'Fundo', aplicacaoMinima: 500, peso: 0, ondeEncontrar: 'Ágora, BTG, C6, Daycoval, Genial, Guide, Inter, NuInvest, Pi/Toro e XP', precoMaximo: null, dy: null },
-            { nome: 'SOLIS CAPITAL ANTARES PIONEIRO', subtipo: '55.318.040/0001-78', categoria: 'Fundo', aplicacaoMinima: 500, peso: 0, ondeEncontrar: 'BTG e XP', precoMaximo: null, dy: null },
-            { nome: 'IBIUNA EQUITIES RESP LIMITADA FIF CIC', subtipo: 'AÇÕES', cnpj: '13.401.715/0001-06', categoria: 'Fundo', aplicacaoMinima: 1000, peso: 0, ondeEncontrar: 'C6 Bank, Inter, Genial, Toro e XP', precoMaximo: null, dy: null },
-            { nome: 'SPX SEAHAWK', subtipo: '', categoria: 'Fundo', aplicacaoMinima: 1000, peso: 0, ondeEncontrar: 'C6, BTG, Genial, Guide, Inter, Itaú, Pi/Toro, Safra e XP', precoMaximo: null, dy: null },
-            { nome: 'BITCOIN', subtipo: 'Teses alternativas', categoria: 'Cripto', aplicacaoMinima: 50, peso: 0, ondeEncontrar: 'Mercado Bitcoin, Binance, Foxbit, NovaDAX, B3 via ETF HASH11', precoMaximo: null, dy: null }
+            { nome: 'CPTS11 - CAPITÂNIA SECURITIES II', subtipo: 'CPTS11', categoria: 'FII', preco: 8.42, aplicacaoMinima: 8.42, nivelMin: 0, peso: 25, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 8.90, dy: 13.26 },
+            { nome: 'ITSA4 - ITAÚSA', subtipo: 'ITSA4', categoria: 'Ação', preco: 9.82, aplicacaoMinima: 9.82, nivelMin: 0, peso: 20, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 11.00, dy: 7.8 },
+            { nome: 'PSEC11 - PÁTRIA SECURITIES', subtipo: 'PSEC11', categoria: 'FII', preco: 9.75, aplicacaoMinima: 9.75, nivelMin: 500, peso: 15, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 81.00, dy: 13.23 },
+            { nome: 'BBSE3 - BB SEGURIDADE', subtipo: 'BBSE3', categoria: 'Ação', preco: 33.85, aplicacaoMinima: 33.85, nivelMin: 500, peso: 20, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 36.00, dy: 8.5 },
+            { nome: 'SLCE3 - SLC AGRÍCOLA', subtipo: 'SLCE3', categoria: 'Ação', preco: 18.30, aplicacaoMinima: 18.30, nivelMin: 500, peso: 10, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 20.00, dy: 4.2 },
+            { nome: 'GOLD11 - GOLD ETF', subtipo: 'Internacional', categoria: 'ETF', preco: 11.95, aplicacaoMinima: 11.95, nivelMin: 500, peso: 5, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: null, dy: null },
+            { nome: 'CMIG4 - CEMIG', subtipo: 'CMIG4', categoria: 'Ação', preco: 11.45, aplicacaoMinima: 11.45, nivelMin: 500, peso: 5, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 13.00, dy: 9.1 },
+            { nome: 'VALORA VANGUARD', subtipo: '', categoria: 'Fundo', aplicacaoMinima: 100, nivelMin: 1000, peso: 0, ondeEncontrar: 'BTG, ITAÚ e XP', precoMaximo: null, dy: null },
+            { nome: 'ACE CAPITAL', subtipo: 'Multimercado', categoria: 'Fundo', aplicacaoMinima: 1, nivelMin: 1000, peso: 0, ondeEncontrar: 'Ágora, Banco Inter, BB, BTG, C6, Genial, Itaú, NuInvest, Pi/Toro, Safra e XP', precoMaximo: null, dy: null },
+            { nome: 'BITCOIN', subtipo: 'Teses alternativas', categoria: 'Cripto', aplicacaoMinima: 50, nivelMin: 5000, peso: 0, ondeEncontrar: 'Mercado Bitcoin, Binance, Foxbit, NovaDAX, B3 via ETF HASH11', precoMaximo: null, dy: null }
         ];
 
         const topCryptos = [
@@ -238,21 +233,33 @@
             const nomeLiquidez = liquidezSelecionada === 'porquinho'? 'Porquinho Inter' : 'Caixinha Nubank';
             const corLiquidez = liquidezSelecionada === 'porquinho'? 'amber' : 'purple';
 
-            // DEFINE QUANTOS ATIVOS MÁXIMO
+            // DEFINE QUANTOS ATIVOS E QUAIS LIBERAR
             let maxAtivos;
-            if (valorTotal < 500) maxAtivos = 2;
-            else if (valorTotal < 5000) maxAtivos = 3;
-            else if (valorTotal < 10000) maxAtivos = 7;
-            else maxAtivos = 11;
+            let nivelPermitido;
+            if (valorTotal < 500) {
+                maxAtivos = 2;
+                nivelPermitido = 0; // Só FII e Ação barata
+            } else if (valorTotal < 5000) {
+                maxAtivos = 3;
+                nivelPermitido = 500; // Libera mais ações e ETF
+            } else if (valorTotal < 10000) {
+                maxAtivos = 7;
+                nivelPermitido = 1000; // Libera fundos
+            } else {
+                maxAtivos = 11;
+                nivelPermitido = 5000; // Libera tudo incluindo cripto
+            }
 
-            // FILTRA ATIVOS - AGORA INCLUI ATIVO SE CABE NO ORÇAMENTO
+            // FILTRA ATIVOS - SÓ MOSTRA SE O APORTE FOR >= nivelMin
             let ativosDisponiveis = carteiraCompleta.filter(ativo => {
                 if (filtroAtual!== 'todos' && ativo.categoria!== filtroAtual) return false;
+                if (ativo.nivelMin > valorTotal) return false;
+                if (filtroAtual === 'todos' && ativo.peso === 0 && valorTotal < ativo.nivelMin) return false;
                 return ativo.aplicacaoMinima <= valorInvestir;
             });
 
-            // SE FILTRO DE FUNDO/CRIPTO, MOSTRA MESMO SEM PESO
-            if (filtroAtual === 'Fundo' || filtroAtual === 'Cripto') {
+            // SE FILTRO ESPECÍFICO, IGNORA PESO
+            if (filtroAtual!== 'todos') {
                 ativosDisponiveis = carteiraCompleta.filter(ativo => {
                     if (ativo.categoria!== filtroAtual) return false;
                     return ativo.aplicacaoMinima <= valorInvestir;
@@ -263,7 +270,7 @@
                 ativosDisponiveis = ativosDisponiveis.filter(a => a.peso > 0);
             }
 
-            // ALOCAÇÃO POR PESO - DIVERSIFICAÇÃO REAL
+            // ALOCAÇÃO POR PESO
             let carteiraFinal = [];
             let valorRestante = valorInvestir;
             let ativosParaAlocar = ativosDisponiveis.slice(0, maxAtivos);
@@ -272,16 +279,14 @@
             for (let i = 0; i < ativosParaAlocar.length && valorRestante >= 1; i++) {
                 const ativo = ativosParaAlocar[i];
 
-                // Calcula valor pra esse ativo baseado no peso
+                // Calcula valor pra esse ativo
                 let valorAlvo;
-                if (filtroAtual === 'Fundo' || filtroAtual === 'Cripto') {
-                    // Se filtro específico, divide igual
+                if (filtroAtual!== 'todos') {
                     valorAlvo = valorInvestir / ativosParaAlocar.length;
                 } else {
-                    valorAlvo = (valorInvestir * ativo.peso) / somaPesos;
+                    valorAlvo = (valorInvestir * (ativo.peso || 1)) / somaPesos;
                 }
 
-                // Se o valor alvo for menor que aplicação mínima, pula
                 if (valorAlvo < ativo.aplicacaoMinima) continue;
 
                 let quantidade = Math.floor(valorAlvo / ativo.aplicacaoMinima);
@@ -289,7 +294,6 @@
 
                 let valorAlocado = quantidade * ativo.aplicacaoMinima;
 
-                // Se passou do orçamento, ajusta
                 if (valorAlocado > valorRestante) {
                     quantidade = Math.floor(valorRestante / ativo.aplicacaoMinima);
                     if (quantidade === 0) continue;
@@ -299,7 +303,7 @@
                 if (valorAlocado < 1) continue;
 
                 carteiraFinal.push({
-          ...ativo,
+        ...ativo,
                     quantidade: quantidade,
                     valorAlocado: valorAlocado
                 });
@@ -405,7 +409,7 @@
                     const variacao = dados[crypto.id]?.usd_24h_change || 0;
                     const formatado = variacao.toFixed(2) + '%';
                     const classeVariacao = variacao >= 0
-           ? "text-xs font-bold text-emerald-400 flex items-center gap-0.5 bg-emerald-500/10 p-1 px-2 rounded-md border border-emerald-500/20 w-fit"
+         ? "text-xs font-bold text-emerald-400 flex items-center gap-0.5 bg-emerald-500/10 p-1 px-2 rounded-md border border-emerald-500/20 w-fit"
                         : "text-xs font-bold text-red-400 flex items-center gap-0.5 bg-red-500/10 p-1 px-2 rounded-md border border-red-500/20 w-fit";
                     const icone = variacao >= 0? 'trending-up' : 'trending-down';
                     const sinal = variacao >= 0? '+' : '';
