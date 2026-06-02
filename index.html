@@ -13,12 +13,15 @@
     
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
-    .font-logo { font-family: 'Orbitron', sans-serif; }
+   .font-logo { font-family: 'Orbitron', sans-serif; }
         input[type=number]::-webkit-inner-spin-button, 
         input[type=number]::-webkit-outer-spin-button { 
           -webkit-appearance: none; 
           margin: 0; 
         }
+   .crypto-scroll::-webkit-scrollbar { height: 6px; }
+   .crypto-scroll::-webkit-scrollbar-track { background: #02050d; border-radius: 10px; }
+   .crypto-scroll::-webkit-scrollbar-thumb { background: #1e3a8a; border-radius: 10px; }
     </style>
 </head>
 <body class="bg-[#030712] text-slate-100 min-h-screen selection:bg-cyan-500 selection:text-black scroll-smooth">
@@ -30,7 +33,7 @@
                     MATIAS INVEST
                 </h1>
                 <p class="text-xs font-semibold tracking-widest text-cyan-400/80 uppercase flex items-center gap-2">
-                    <span class="inline-block w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span> Carteira Executável com Cotas Inteiras
+                    <span class="inline-block w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span> Carteira Executável Inteligente
                 </p>
             </div>
             <div class="bg-[#071126]/90 border border-blue-900/40 rounded-2xl p-4 px-6 backdrop-blur-md shadow-[0_0_30px_rgba(0,0,0,0.5)] flex items-center gap-4">
@@ -47,17 +50,17 @@
                     <h2 class="text-xl font-bold text-white flex items-center gap-2 mb-2">
                         <i data-lucide="file-input" class="w-5 h-5 text-cyan-400"></i> Plataforma de Execução
                     </h2>
-                    <p class="text-xs text-slate-400 mb-6">Banco Inter - Digite o valor e gere ordens reais de compra.</p>
+                    <p class="text-xs text-slate-400 mb-6">Banco Inter - Concentra em poucos ativos pra valores baixos.</p>
                 </div>
                 
                 <div class="bg-[#02050d] p-4 rounded-xl border border-blue-950/40 space-y-3">
                     <label class="text-sm font-medium text-slate-300">VALOR TOTAL DO APORTE</label>
                     <div class="relative">
                         <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 font-bold">R$</span>
-                        <input type="number" id="input-valor-total" placeholder="1900" class="w-full bg-slate-900 border border-slate-800 rounded-lg pl-10 pr-4 py-3 text-white font-bold font-logo text-lg focus:outline-none focus:border-cyan-500 transition" oninput="gerarCarteira()">
+                        <input type="number" id="input-valor-total" placeholder="Digite o valor disponível" class="w-full bg-slate-900 border border-slate-800 rounded-lg pl-10 pr-4 py-3 text-white font-bold font-logo text-lg focus:outline-none focus:border-cyan-500 transition" oninput="gerarCarteira()">
                     </div>
                     <button onclick="gerarCarteira()" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-black py-3 rounded-lg transition-all shadow-[0_0_20px_rgba(6,182,212,0.3)] flex items-center justify-center gap-2">
-                        <i data-lucide="calculator" class="w-4 h-4"></i> Calcular Alocação Real
+                        <i data-lucide="calculator" class="w-4 h-4"></i> Calcular Carteira Real
                     </button>
                     <div id="aviso-minimo" class="hidden text-xs text-amber-400 bg-amber-500/10 p-2 rounded border border-amber-500/20"></div>
                 </div>
@@ -67,14 +70,14 @@
                 </div>
                 
                 <div class="text-xs text-slate-500 text-center italic pt-4 border-t border-slate-900">
-                    Preços base Out/2026 - Matias Invest © 2026
+                    Lógica de concentração ativa - Matias Invest © 2026
                 </div>
             </div>
             
             <div class="lg:col-span-7 space-y-6">
                 <div class="bg-[#050c1e]/40 border border-blue-950/40 rounded-3xl p-8 flex flex-col items-center justify-center relative overflow-hidden group min-h-[380px]">
                     <div class="absolute w-72 h-72 bg-blue-500/5 rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-700"></div>
-                    <h3 class="text-lg font-bold text-white mb-4 z-10">Distribuição Executável</h3>
+                    <h3 class="text-lg font-bold text-white mb-4 z-10">Distribuição Concentrada</h3>
                     <div class="w-full aspect-square max-w-96 relative z-10">
                         <canvas id="graficoAlocacao"></canvas>
                     </div>
@@ -100,38 +103,67 @@
                 </div>
             </div>
         </main>
+        
+        <section id="aba-cripto" class="pt-4 space-y-6 scroll-mt-6">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-900 pb-4 gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-3 bg-amber-500/10 rounded-2xl border border-amber-500/20 text-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.1)]">
+                        <i data-lucide="terminal" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-black text-white tracking-tight">Crypto Terminal</h2>
+                        <p class="text-xs text-slate-400">Top 10 criptomoedas em tempo real via CoinGecko</p>
+                    </div>
+                </div>
+                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> FEED ATIVO
+                </span>
+            </div>
+            <div id="crypto-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                <!-- Cards gerados via JS -->
+            </div>
+        </section>
     </div>
     
     <script>
         lucide.createIcons();
         
-        // Carteira completa com preços reais Out/2026
+        // Carteira com preços reais Out/2026 - ORDEM DE PRIORIDADE
         const carteiraCompleta = [
-            // FIIs - 40%
-            { nome: 'XPCI11', alocacao: 8, tipo: 'FII', cor: '#0891b2', preco: 84.50, nomeCompleto: 'XP CREDITO IMOB.' },
-            { nome: 'XPML11', alocacao: 8, tipo: 'FII', cor: '#0e7490', preco: 97.20, nomeCompleto: 'XP MALLS FII' },
-            { nome: 'PSEC11', alocacao: 6, tipo: 'FII', cor: '#22d3ee', preco: 9.75, nomeCompleto: 'PSEC FII' },
-            { nome: 'CPTS11', alocacao: 5, tipo: 'FII', cor: '#06b6d4', preco: 8.42, nomeCompleto: 'CPTS FII' },
-            { nome: 'IFRA11', alocacao: 5, tipo: 'FII', cor: '#0c4a6e', preco: 101.30, nomeCompleto: 'INFRA REAL FII' },
-            { nome: 'PVBI11', alocacao: 4, tipo: 'FII', cor: '#0369a1', preco: 94.80, nomeCompleto: 'VBI LOG FII' },
-            { nome: 'BTCI11', alocacao: 4, tipo: 'FII', cor: '#155e75', preco: 81.50, nomeCompleto: 'BTG PACTUAL CI' },
-            { nome: 'HGLG11', alocacao: 5, tipo: 'FII', cor: '#164e63', preco: 168.40, nomeCompleto: 'CSHG LOGISTICA' },
-            { nome: 'MXRF11', alocacao: 5, tipo: 'FII', cor: '#0ea5e9', preco: 10.15, nomeCompleto: 'MXRF FII' },
+            // PRIORIDADE 1 - Core da carteira
+            { nome: 'BBSE3', alocacao: 12, tipo: 'Ação', cor: '#2563eb', preco: 33.85, nomeCompleto: 'BB SEGURIDADE', prioridade: 1 },
+            { nome: 'GOLD11', alocacao: 10, tipo: 'ETF', cor: '#a855f7', preco: 11.95, nomeCompleto: 'GOLD ETF', prioridade: 1 },
+            { nome: 'PSEC11', alocacao: 10, tipo: 'FII', cor: '#22d3ee', preco: 9.75, nomeCompleto: 'PSEC FII', prioridade: 1 },
+            { nome: 'XPCI11', alocacao: 8, tipo: 'FII', cor: '#0891b2', preco: 84.50, nomeCompleto: 'XP CREDITO IMOB.', prioridade: 1 },
+            { nome: 'XPML11', alocacao: 8, tipo: 'FII', cor: '#0e7490', preco: 97.20, nomeCompleto: 'XP MALLS FII', prioridade: 1 },
             
-            // Ações - 40%
-            { nome: 'BBSE3', alocacao: 8, tipo: 'Ação', cor: '#2563eb', preco: 33.85, nomeCompleto: 'BB SEGURIDADE' },
-            { nome: 'SLCE3', alocacao: 6, tipo: 'Ação', cor: '#3b82f6', preco: 18.30, nomeCompleto: 'SLC AGRICOLA' },
-            { nome: 'CMIG4', alocacao: 5, tipo: 'Ação', cor: '#1d4ed8', preco: 10.95, nomeCompleto: 'CEMIG PN' },
-            { nome: 'GMAT3', alocacao: 5, tipo: 'Ação', cor: '#1e40af', preco: 6.75, nomeCompleto: 'GRUPO MATEUS' },
-            { nome: 'KLBN4', alocacao: 5, tipo: 'Ação', cor: '#1e3a8a', preco: 4.18, nomeCompleto: 'KLABIN PN' },
-            { nome: 'WIZC3', alocacao: 3, tipo: 'Ação', cor: '#312e81', preco: 7.42, nomeCompleto: 'WIZ CO' },
-            { nome: 'ITSA4', alocacao: 4, tipo: 'Ação', cor: '#1e3a8a', preco: 9.88, nomeCompleto: 'ITAUSA PN' },
-            { nome: 'VALE3', alocacao: 4, tipo: 'Ação', cor: '#1e40af', preco: 62.40, nomeCompleto: 'VALE ON' },
+            // PRIORIDADE 2 - Diversificação
+            { nome: 'SLCE3', alocacao: 7, tipo: 'Ação', cor: '#3b82f6', preco: 18.30, nomeCompleto: 'SLC AGRICOLA', prioridade: 2 },
+            { nome: 'USDB11', alocacao: 7, tipo: 'ETF', cor: '#9333ea', preco: 114.60, nomeCompleto: 'USD BRASIL ETF', prioridade: 2 },
+            { nome: 'CPTS11', alocacao: 6, tipo: 'FII', cor: '#06b6d4', preco: 8.42, nomeCompleto: 'CPTS FII', prioridade: 2 },
+            { nome: 'IFRA11', alocacao: 6, tipo: 'FII', cor: '#0c4a6e', preco: 101.30, nomeCompleto: 'INFRA REAL FII', prioridade: 2 },
+            { nome: 'CMIG4', alocacao: 5, tipo: 'Ação', cor: '#1d4ed8', preco: 10.95, nomeCompleto: 'CEMIG PN', prioridade: 2 },
             
-            // ETFs - 20%
-            { nome: 'GOLD11', alocacao: 7, tipo: 'ETF', cor: '#a855f7', preco: 11.95, nomeCompleto: 'GOLD ETF' },
-            { nome: 'USDB11', alocacao: 7, tipo: 'ETF', cor: '#9333ea', preco: 114.60, nomeCompleto: 'USD BRASIL ETF' },
-            { nome: 'BOVA11', alocacao: 6, tipo: 'ETF', cor: '#7e22ce', preco: 118.50, nomeCompleto: 'BOVESPA ETF' }
+            // PRIORIDADE 3 - Complementares
+            { nome: 'GMAT3', alocacao: 5, tipo: 'Ação', cor: '#1e40af', preco: 6.75, nomeCompleto: 'GRUPO MATEUS', prioridade: 3 },
+            { nome: 'PVBI11', alocacao: 4, tipo: 'FII', cor: '#0369a1', preco: 94.80, nomeCompleto: 'VBI LOG FII', prioridade: 3 },
+            { nome: 'BTCI11', alocacao: 4, tipo: 'FII', cor: '#155e75', preco: 81.50, nomeCompleto: 'BTG PACTUAL CI', prioridade: 3 },
+            { nome: 'KLBN4', alocacao: 4, tipo: 'Ação', cor: '#1e3a8a', preco: 4.18, nomeCompleto: 'KLABIN PN', prioridade: 3 },
+            { nome: 'WIZC3', alocacao: 2, tipo: 'Ação', cor: '#312e81', preco: 7.42, nomeCompleto: 'WIZ CO', prioridade: 3 },
+            { nome: 'HGLG11', alocacao: 2, tipo: 'FII', cor: '#164e63', preco: 168.40, nomeCompleto: 'CSHG LOGISTICA', prioridade: 3 }
+        ];
+        
+        const topCryptos = [
+            { id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin', color: '#f7931a' },
+            { id: 'ethereum', symbol: 'ETH', name: 'Ethereum', color: '#627eea' },
+            { id: 'solana', symbol: 'SOL', name: 'Solana', color: '#9945ff' },
+            { id: 'binancecoin', symbol: 'BNB', name: 'BNB', color: '#f3ba2f' },
+            { id: 'ripple', symbol: 'XRP', name: 'XRP', color: '#23292f' },
+            { id: 'dogecoin', symbol: 'DOGE', name: 'Dogecoin', color: '#c2a633' },
+            { id: 'cardano', symbol: 'ADA', name: 'Cardano', color: '#0033ad' },
+            { id: 'avalanche-2', symbol: 'AVAX', name: 'Avalanche', color: '#e84142' },
+            { id: 'chainlink', symbol: 'LINK', name: 'Chainlink', color: '#2a5ada' },
+            { id: 'polygon', symbol: 'MATIC', name: 'Polygon', color: '#8247e5' }
         ];
         
         const ctx = document.getElementById('graficoAlocacao').getContext('2d');
@@ -174,18 +206,32 @@
             if (valorTotal <= 0) {
                 document.getElementById('lista-ativos').innerHTML = '<p class="text-xs text-slate-500 text-center py-8">Digite um valor acima para gerar a carteira</p>';
                 document.getElementById('valor-aporte-display').innerText = 'R$ 0,00';
+                graficoAlocacao.data.labels = [];
+                graficoAlocacao.data.datasets[0].data = [];
+                graficoAlocacao.update();
                 return;
             }
             
             document.getElementById('valor-aporte-display').innerText = valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
             
-            if (valorTotal < 500) {
+            // LÓGICA DE CONCENTRAÇÃO: Define quantos ativos usar
+            let maxAtivos;
+            if (valorTotal < 1000) {
+                maxAtivos = 3;
                 aviso.classList.remove('hidden');
-                aviso.innerHTML = `<i data-lucide="alert-triangle" class="w-3 h-3 inline"></i> Aporte mínimo R$ 500 para diversificar. Abaixo disso a carteira fica concentrada.`;
-                lucide.createIcons();
+                aviso.innerHTML = `<i data-lucide="info" class="w-3 h-3 inline"></i> Concentrando em 3 ativos pra otimizar seu aporte de R$ ${valorTotal.toFixed(2)}`;
+            } else if (valorTotal < 2000) {
+                maxAtivos = 5;
+                aviso.classList.remove('hidden');
+                aviso.innerHTML = `<i data-lucide="info" class="w-3 h-3 inline"></i> Concentrando em 5 ativos principais`;
+            } else if (valorTotal < 5000) {
+                maxAtivos = 8;
+                aviso.classList.add('hidden');
             } else {
+                maxAtivos = 999;
                 aviso.classList.add('hidden');
             }
+            lucide.createIcons();
             
             const labels = [];
             const data = [];
@@ -193,20 +239,23 @@
             let listaHTML = '';
             let valorInvestido = 0;
             let qtdAtivos = 0;
+            let valorRestante = valorTotal;
             
-            // Ordena por prioridade de alocação
-            const carteiraOrdenada = [...carteiraCompleta].sort((a, b) => b.alocacao - a.alocacao);
+            // Ordena por prioridade e tenta alocar
+            const carteiraOrdenada = [...carteiraCompleta].sort((a, b) => a.prioridade - b.prioridade || b.alocacao - a.alocacao);
             
-            carteiraOrdenada.forEach(ativo => {
+            for (let i = 0; i < carteiraOrdenada.length && qtdAtivos < maxAtivos; i++) {
+                const ativo = carteiraOrdenada[i];
                 const valorAlvo = valorTotal * (ativo.alocacao / 100);
-                const qtdCotas = Math.floor(valorAlvo / ativo.preco);
+                const qtdCotas = Math.floor(Math.min(valorAlvo, valorRestante) / ativo.preco);
                 const valorReal = qtdCotas * ativo.preco;
                 
-                if (qtdCotas >= 1) {
+                if (qtdCotas >= 1 && valorReal <= valorRestante) {
                     labels.push(ativo.nome);
                     data.push(valorReal);
                     colors.push(ativo.cor);
                     valorInvestido += valorReal;
+                    valorRestante -= valorReal;
                     qtdAtivos++;
                     
                     const percentual = ((valorReal / valorTotal) * 100).toFixed(2);
@@ -247,12 +296,12 @@
                         </div>
                     `;
                 }
-            });
+            }
             
             const caixa = valorTotal - valorInvestido;
             const eficiencia = ((valorInvestido / valorTotal) * 100).toFixed(1);
             
-            document.getElementById('lista-ativos').innerHTML = listaHTML || '<p class="text-xs text-red-400 text-center py-8">Valor insuficiente para comprar 1 cota de qualquer ativo. Aporte mínimo: R$ 4,18</p>';
+            document.getElementById('lista-ativos').innerHTML = listaHTML || '<p class="text-xs text-red-400 text-center py-8">Valor insuficiente para comprar 1 cota. Aporte mínimo: R$ 4,18</p>';
             document.getElementById('total-investido').innerText = valorInvestido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
             document.getElementById('total-caixa').innerText = caixa.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
             document.getElementById('total-ativos').innerText = qtdAtivos;
@@ -266,8 +315,53 @@
             graficoAlocacao.update();
         }
         
-        // Carrega exemplo com R$ 1900
-        document.getElementById('input-valor-total').value = 1900;
+        async function buscarPrecosCripto() {
+            try {
+                const ids = topCryptos.map(c => c.id).join(',');
+                const resposta = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`);
+                const dados = await resposta.json();
+                
+                let cryptoHTML = '';
+                topCryptos.forEach(crypto => {
+                    const preco = dados[crypto.id]?.usd || 0;
+                    const variacao = dados[crypto.id]?.usd_24h_change || 0;
+                    const formatado = variacao.toFixed(2) + '%';
+                    const classeVariacao = variacao >= 0 
+                      ? "text-xs font-bold text-emerald-400 flex items-center gap-0.5 bg-emerald-500/10 p-1 px-2 rounded-md border border-emerald-500/20 w-fit"
+                        : "text-xs font-bold text-red-400 flex items-center gap-0.5 bg-red-500/10 p-1 px-2 rounded-md border border-red-500/20 w-fit";
+                    const icone = variacao >= 0? 'trending-up' : 'trending-down';
+                    const sinal = variacao >= 0? '+' : '';
+                    
+                    cryptoHTML += `
+                        <div class="bg-gradient-to-b from-[#060e22] to-[#02050d] p-5 rounded-2xl border border-blue-950/60 relative overflow-hidden group hover:border-cyan-500/30 transition-all duration-300 shadow-xl">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="text-base font-bold text-white font-logo tracking-wider">${crypto.name}</h3>
+                                    <span class="text-xs text-slate-500 font-mono tracking-widest">${crypto.symbol} // USD</span>
+                                </div>
+                                <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background-color: ${crypto.color}20; border: 1px solid ${crypto.color}40; color: ${crypto.color}">
+                                    <i data-lucide="activity" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="text-2xl font-black font-logo tracking-wide text-white">$${preco.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+                                <div class="${classeVariacao}">
+                                    <i data-lucide="${icone}" class="w-3.5 h-3.5"></i> ${sinal}${formatado} (24H)
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                document.getElementById('crypto-grid').innerHTML = cryptoHTML;
+                lucide.createIcons();
+            } catch (erro) {
+                console.error("Erro na leitura de dados do mercado: ", erro);
+            }
+        }
+        
+        buscarPrecosCripto();
+        setInterval(buscarPrecosCripto, 30000);
         gerarCarteira();
     </script>
 </body>
