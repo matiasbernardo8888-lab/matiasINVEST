@@ -12,16 +12,16 @@
 
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; }
-  .font-logo { font-family: 'Orbitron', sans-serif; }
+ .font-logo { font-family: 'Orbitron', sans-serif; }
         input[type=number]::-webkit-inner-spin-button,
         input[type=number]::-webkit-outer-spin-button {
           -webkit-appearance: none;
           margin: 0;
         }
-  .card-expand { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-  .card-expand.active { max-height: 600px; }
-  .nav-active { color: #06b6d4; }
-  .nav-active svg { stroke: #06b6d4; }
+ .card-expand { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+ .card-expand.active { max-height: 600px; }
+ .nav-active { color: #06b6d4; }
+ .nav-active svg { stroke: #06b6d4; }
     </style>
 </head>
 <body class="bg-black text-slate-100 min-h-screen pb-24">
@@ -122,20 +122,25 @@
     <script>
         lucide.createIcons();
 
-        // ATIVOS COM PESO DE ALOCAÇÃO - DIVERSIFICAÇÃO INTELIGENTE
+        // ATIVOS COM ONDE ENCONTRAR CORRETO DA PLANILHA
         const carteiraCompleta = [
-            { nome: 'CPTS11 - CAPITÂNIA SECURITIES II', subtipo: 'CPTS11', categoria: 'FII', preco: 8.42, aplicacaoMinima: 8.42, peso: 25, ondeEncontrar: 'Home broker', precoMaximo: 8.90, dy: 13.26 },
-            { nome: 'ITSA4 - ITAÚSA', subtipo: 'ITSA4', categoria: 'Ação', preco: 9.82, aplicacaoMinima: 9.82, peso: 20, ondeEncontrar: 'Home broker', precoMaximo: 11.00, dy: 7.8 },
-            { nome: 'PSEC11 - PÁTRIA SECURITIES', subtipo: 'PSEC11', categoria: 'FII', preco: 9.75, aplicacaoMinima: 9.75, peso: 15, ondeEncontrar: 'Home broker', precoMaximo: 81.00, dy: 13.23 },
-            { nome: 'BBSE3 - BB SEGURIDADE', subtipo: 'BBSE3', categoria: 'Ação', preco: 33.85, aplicacaoMinima: 33.85, peso: 20, ondeEncontrar: 'Home broker', precoMaximo: 36.00, dy: 8.5 },
-            { nome: 'SLCE3 - SLC AGRÍCOLA', subtipo: 'SLCE3', categoria: 'Ação', preco: 18.30, aplicacaoMinima: 18.30, peso: 10, ondeEncontrar: 'Home broker', precoMaximo: 20.00, dy: 4.2 },
-            { nome: 'GOLD11 - GOLD ETF', subtipo: 'Internacional', categoria: 'ETF', preco: 11.95, aplicacaoMinima: 11.95, peso: 5, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null },
-            { nome: 'CMIG4 - CEMIG', subtipo: 'CMIG4', categoria: 'Ação', preco: 11.45, aplicacaoMinima: 11.45, peso: 5, ondeEncontrar: 'Home broker', precoMaximo: 13.00, dy: 9.1 },
-            { nome: 'WRLD11 (no exterior é o VT)', subtipo: 'Internacional', categoria: 'ETF', preco: 12.80, aplicacaoMinima: 12.80, peso: 0, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null },
+            { nome: 'CPTS11 - CAPITÂNIA SECURITIES II', subtipo: 'CPTS11', categoria: 'FII', preco: 8.42, aplicacaoMinima: 8.42, peso: 25, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 8.90, dy: 13.26 },
+            { nome: 'ITSA4 - ITAÚSA', subtipo: 'ITSA4', categoria: 'Ação', preco: 9.82, aplicacaoMinima: 9.82, peso: 20, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 11.00, dy: 7.8 },
+            { nome: 'PSEC11 - PÁTRIA SECURITIES', subtipo: 'PSEC11', categoria: 'FII', preco: 9.75, aplicacaoMinima: 9.75, peso: 15, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 81.00, dy: 13.23 },
+            { nome: 'BBSE3 - BB SEGURIDADE', subtipo: 'BBSE3', categoria: 'Ação', preco: 33.85, aplicacaoMinima: 33.85, peso: 20, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 36.00, dy: 8.5 },
+            { nome: 'SLCE3 - SLC AGRÍCOLA', subtipo: 'SLCE3', categoria: 'Ação', preco: 18.30, aplicacaoMinima: 18.30, peso: 10, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 20.00, dy: 4.2 },
+            { nome: 'GOLD11 - GOLD ETF', subtipo: 'Internacional', categoria: 'ETF', preco: 11.95, aplicacaoMinima: 11.95, peso: 5, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: null, dy: null },
+            { nome: 'CMIG4 - CEMIG', subtipo: 'CMIG4', categoria: 'Ação', preco: 11.45, aplicacaoMinima: 11.45, peso: 5, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 13.00, dy: 9.1 },
+            { nome: 'WRLD11 (no exterior é o VT)', subtipo: 'Internacional', categoria: 'ETF', preco: 12.80, aplicacaoMinima: 12.80, peso: 0, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: null, dy: null },
             { nome: 'VALORA VANGUARD', subtipo: '', categoria: 'Fundo', aplicacaoMinima: 100, peso: 0, ondeEncontrar: 'BTG, ITAÚ e XP', precoMaximo: null, dy: null },
-            { nome: 'XPML11 - XP MALLS', subtipo: 'XPML11', categoria: 'FII', preco: 97.20, aplicacaoMinima: 97.20, peso: 0, ondeEncontrar: 'Home broker', precoMaximo: 115.00, dy: 10.18 },
-            { nome: 'ACE CAPITAL', subtipo: 'Multimercado', categoria: 'Fundo', aplicacaoMinima: 1, peso: 0, ondeEncontrar: 'Ágora, Banco Inter, BB, BTG, C6, Genial, Itaú, NuInvest, Pi / Toro, Safra e XP', precoMaximo: null, dy: null },
-            { nome: 'BITCOIN', subtipo: 'Teses alternativas', categoria: 'Cripto', aplicacaoMinima: 50, peso: 0, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null }
+            { nome: 'XPML11 - XP MALLS', subtipo: 'XPML11', categoria: 'FII', preco: 97.20, aplicacaoMinima: 97.20, peso: 0, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 115.00, dy: 10.18 },
+            { nome: 'ACE CAPITAL', subtipo: 'Multimercado', categoria: 'Fundo', aplicacaoMinima: 1, peso: 0, ondeEncontrar: 'Ágora, Banco Inter, BB, BTG, C6, Genial, Itaú, NuInvest, Pi/Toro, Safra e XP', precoMaximo: null, dy: null },
+            { nome: 'GENOA CAPITAL RADAR', subtipo: 'Multimercado', categoria: 'Fundo', aplicacaoMinima: 500, peso: 0, ondeEncontrar: 'Ágora, Banco Inter, BTG, Genial, Guide, Itaú, NuInvest, Pi/Toro, Safra e XP', precoMaximo: null, dy: null },
+            { nome: 'DAHLIA TOTAL RETURN', subtipo: '', categoria: 'Fundo', aplicacaoMinima: 500, peso: 0, ondeEncontrar: 'Ágora, BTG, C6, Daycoval, Genial, Guide, Inter, NuInvest, Pi/Toro e XP', precoMaximo: null, dy: null },
+            { nome: 'SOLIS CAPITAL ANTARES PIONEIRO', subtipo: '55.318.040/0001-78', categoria: 'Fundo', aplicacaoMinima: 500, peso: 0, ondeEncontrar: 'BTG e XP', precoMaximo: null, dy: null },
+            { nome: 'IBIUNA EQUITIES RESP LIMITADA FIF CIC', subtipo: 'AÇÕES', cnpj: '13.401.715/0001-06', categoria: 'Fundo', aplicacaoMinima: 1000, peso: 0, ondeEncontrar: 'C6 Bank, Inter, Genial, Toro e XP', precoMaximo: null, dy: null },
+            { nome: 'SPX SEAHAWK', subtipo: '', categoria: 'Fundo', aplicacaoMinima: 1000, peso: 0, ondeEncontrar: 'C6, BTG, Genial, Guide, Inter, Itaú, Pi/Toro, Safra e XP', precoMaximo: null, dy: null },
+            { nome: 'BITCOIN', subtipo: 'Teses alternativas', categoria: 'Cripto', aplicacaoMinima: 50, peso: 0, ondeEncontrar: 'Mercado Bitcoin, Binance, Foxbit, NovaDAX, B3 via ETF HASH11', precoMaximo: null, dy: null }
         ];
 
         const topCryptos = [
@@ -242,7 +247,7 @@
             else if (valorTotal < 10000) maxAtivos = 7;
             else maxAtivos = 11;
 
-            // FILTRA ATIVOS COM PESO > 0
+            // FILTRA ATIVOS COM PESO > 0 E QUE CABEM NO ORÇAMENTO
             let ativosDisponiveis = carteiraCompleta.filter(ativo => {
                 if (filtroAtual!== 'todos' && ativo.categoria!== filtroAtual) return false;
                 if (ativo.peso === 0) return false;
@@ -255,7 +260,7 @@
             let ativosParaAlocar = ativosDisponiveis.slice(0, maxAtivos);
             let somaPesos = ativosParaAlocar.reduce((acc, a) => acc + a.peso, 0);
 
-            for (let i = 0; i < ativosParaAlocar.length && valorRestante >= 50; i++) {
+            for (let i = 0; i < ativosParaAlocar.length && valorRestante >= 1; i++) {
                 const ativo = ativosParaAlocar[i];
 
                 // Calcula valor pra esse ativo baseado no peso
@@ -276,10 +281,10 @@
                     valorAlocado = quantidade * ativo.aplicacaoMinima;
                 }
 
-                if (valorAlocado < 50) continue; // Não mostra migalha menor que R$ 50
+                if (valorAlocado < 1) continue;
 
                 carteiraFinal.push({
-             ...ativo,
+            ...ativo,
                     quantidade: quantidade,
                     valorAlocado: valorAlocado
                 });
@@ -295,7 +300,7 @@
             let listaHTML = '';
 
             if (carteiraFinal.length === 0) {
-                listaHTML = '<p class="text-xs text-amber-400 text-center py-8 bg-amber-500/10 rounded-lg border border-amber-500/20">Valor insuficiente para diversificar. Mínimo: R$ 200,00</p>';
+                listaHTML = '<p class="text-xs text-amber-400 text-center py-8 bg-amber-500/10 rounded-lg border border-amber-500/20">Valor insuficiente para diversificar. Mínimo: R$ 100,00</p>';
             } else {
                 carteiraFinal.forEach((ativo, index) => {
                     const id = `${ativo.nome.replace(/[^a-zA-Z0-9]/g, '')}-${index}`;
@@ -385,7 +390,7 @@
                     const variacao = dados[crypto.id]?.usd_24h_change || 0;
                     const formatado = variacao.toFixed(2) + '%';
                     const classeVariacao = variacao >= 0
-              ? "text-xs font-bold text-emerald-400 flex items-center gap-0.5 bg-emerald-500/10 p-1 px-2 rounded-md border border-emerald-500/20 w-fit"
+             ? "text-xs font-bold text-emerald-400 flex items-center gap-0.5 bg-emerald-500/10 p-1 px-2 rounded-md border border-emerald-500/20 w-fit"
                         : "text-xs font-bold text-red-400 flex items-center gap-0.5 bg-red-500/10 p-1 px-2 rounded-md border border-red-500/20 w-fit";
                     const icone = variacao >= 0? 'trending-up' : 'trending-down';
                     const sinal = variacao >= 0? '+' : '';
