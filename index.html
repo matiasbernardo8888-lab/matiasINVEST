@@ -12,16 +12,16 @@
 
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; }
-      .font-logo { font-family: 'Orbitron', sans-serif; }
+     .font-logo { font-family: 'Orbitron', sans-serif; }
         input[type=number]::-webkit-inner-spin-button,
         input[type=number]::-webkit-outer-spin-button {
           -webkit-appearance: none;
           margin: 0;
         }
-      .card-expand { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-      .card-expand.active { max-height: 600px; }
-      .nav-active { color: #06b6d4; }
-      .nav-active svg { stroke: #06b6d4; }
+     .card-expand { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+     .card-expand.active { max-height: 600px; }
+     .nav-active { color: #06b6d4; }
+     .nav-active svg { stroke: #06b6d4; }
     </style>
 </head>
 <body class="bg-black text-slate-100 min-h-screen pb-24">
@@ -134,7 +134,7 @@
     <script>
         lucide.createIcons();
 
-        // ATIVOS ORDENADOS POR PREÇO - DO MAIS BARATO PRO MAIS CARO
+        // ATIVOS ORDENADOS POR PRIORIDADE DE DIVERSIFICAÇÃO
         const carteiraCompleta = [
             { nome: 'CPTS11 - CAPITÂNIA SECURITIES II', subtipo: 'CPTS11', categoria: 'FII', preco: 8.42, aplicacaoMinima: 8.42, ondeEncontrar: 'Home broker', precoMaximo: 8.90, dy: 13.26 },
             { nome: 'ITSA4 - ITAÚSA', subtipo: 'ITSA4', categoria: 'Ação', preco: 9.82, aplicacaoMinima: 9.82, ondeEncontrar: 'Home broker', precoMaximo: 11.00, dy: 7.8 },
@@ -144,14 +144,11 @@
             { nome: 'WRLD11 (no exterior é o VT)', subtipo: 'Internacional', categoria: 'ETF', preco: 12.80, aplicacaoMinima: 12.80, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null },
             { nome: 'SLCE3 - SLC AGRÍCOLA', subtipo: 'SLCE3', categoria: 'Ação', preco: 18.30, aplicacaoMinima: 18.30, ondeEncontrar: 'Home broker', precoMaximo: 20.00, dy: 4.2 },
             { nome: 'BBSE3 - BB SEGURIDADE', subtipo: 'BBSE3', categoria: 'Ação', preco: 33.85, aplicacaoMinima: 33.85, ondeEncontrar: 'Home broker', precoMaximo: 36.00, dy: 8.5 },
-            { nome: 'XPML11 - XP MALLS', subtipo: 'XPML11', categoria: 'FII', preco: 97.20, aplicacaoMinima: 97.20, ondeEncontrar: 'Home broker', precoMaximo: 115.00, dy: 10.18 },
-            { nome: 'PVBI11 - VBI PRIME PROPERTIES', subtipo: 'PVBI11', categoria: 'FII', preco: 98.50, aplicacaoMinima: 98.50, ondeEncontrar: 'Home broker', precoMaximo: 110.00, dy: 7.11 },
-            { nome: 'KDIF11 (KINEA INFRA RENDA FIXA)', subtipo: 'Renda Fixa Dinâmica', categoria: 'FII', preco: 102.30, aplicacaoMinima: 102.30, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null },
-            { nome: 'IFRA11 (ITAÚ FICFIDC DE INFRAESTRUTURA)', subtipo: 'Renda Fixa Dinâmica', categoria: 'FII', preco: 101.30, aplicacaoMinima: 101.30, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null },
-            { nome: 'USDB11 (no exterior é o BND)', subtipo: 'Internacional', categoria: 'ETF', preco: 114.60, aplicacaoMinima: 114.60, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null },
             { nome: 'ACE CAPITAL', subtipo: 'Multimercado', categoria: 'Fundo', aplicacaoMinima: 1, ondeEncontrar: 'Ágora, Banco Inter, BB, BTG, C6, Genial, Itaú, NuInvest, Pi / Toro, Safra e XP', precoMaximo: null, dy: null },
             { nome: 'VALORA VANGUARD', subtipo: '', categoria: 'Fundo', aplicacaoMinima: 100, ondeEncontrar: 'BTG, ITAÚ e XP', precoMaximo: null, dy: null },
             { nome: 'FUNDOS PASSIVOS AO IMA-B', subtipo: '', categoria: 'Fundo', aplicacaoMinima: 100, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null },
+            { nome: 'XPML11 - XP MALLS', subtipo: 'XPML11', categoria: 'FII', preco: 97.20, aplicacaoMinima: 97.20, ondeEncontrar: 'Home broker', precoMaximo: 115.00, dy: 10.18 },
+            { nome: 'PVBI11 - VBI PRIME PROPERTIES', subtipo: 'PVBI11', categoria: 'FII', preco: 98.50, aplicacaoMinima: 98.50, ondeEncontrar: 'Home broker', precoMaximo: 110.00, dy: 7.11 },
             { nome: 'GENOA CAPITAL RADAR', subtipo: 'Multimercado', categoria: 'Fundo', aplicacaoMinima: 500, ondeEncontrar: 'Ágora, Banco Inter, BTG, Genial, Guide, Itaú, NuInvest, Pi/Toro, Safra e XP', precoMaximo: null, dy: null },
             { nome: 'DAHLIA TOTAL RETURN', subtipo: '', categoria: 'Fundo', aplicacaoMinima: 500, ondeEncontrar: 'Ágora, BTG, C6, Daycoval, Genial, Guide, Inter, NuInvest, Pi/Toro e XP', precoMaximo: null, dy: null },
             { nome: 'SOLIS CAPITAL ANTARES PIONEIRO', subtipo: '55.318.040/0001-78', categoria: 'Fundo', aplicacaoMinima: 500, ondeEncontrar: 'BTG e XP', precoMaximo: null, dy: null },
@@ -251,7 +248,7 @@
 
             document.getElementById('valor-aporte-display').innerText = valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-            // REGRA DE LIQUIDEZ: 40% sempre
+            // REGRA DE LIQUIDEZ: 40% SEMPRE
             const valorLiquidez = Math.floor(valorTotal * 0.40);
             let valorInvestir = valorTotal - valorLiquidez;
             const nomeLiquidez = liquidezSelecionada === 'porquinho'? 'Porquinho Inter' : 'Caixinha Nubank';
@@ -259,10 +256,10 @@
 
             // DEFINE QUANTOS ATIVOS MÁXIMO - SUA REGRA
             let maxAtivos;
-            if (valorTotal < 500) maxAtivos = 2; // 1 liquidez + 2 ativos = 3 total
-            else if (valorTotal < 5000) maxAtivos = 3; // 1 liquidez + 3 ativos = 4 total
-            else if (valorTotal < 10000) maxAtivos = 7; // 1 liquidez + 7 ativos = 8 total
-            else maxAtivos = 11; // 1 liquidez + 11 ativos = 12 total
+            if (valorTotal < 500) maxAtivos = 2;
+            else if (valorTotal < 5000) maxAtivos = 3;
+            else if (valorTotal < 10000) maxAtivos = 7;
+            else maxAtivos = 11;
 
             // FILTRA ATIVOS QUE CABEM NO ORÇAMENTO
             let ativosDisponiveis = carteiraCompleta.filter(ativo => {
@@ -270,24 +267,33 @@
                 return ativo.aplicacaoMinima <= valorInvestir;
             });
 
-            // ALOCAÇÃO: COMPRA MÁXIMO DE COTAS DO MAIS BARATO
+            // DIVERSIFICAÇÃO: DIVIDE O VALOR ENTRE OS ATIVOS
             let carteiraFinal = [];
             let valorRestante = valorInvestir;
+            let valorPorAtivo = valorInvestir / maxAtivos;
 
             for (let i = 0; i < ativosDisponiveis.length && carteiraFinal.length < maxAtivos && valorRestante > 0; i++) {
                 const ativo = ativosDisponiveis[i];
 
-                let quantidade = Math.floor(valorRestante / ativo.aplicacaoMinima);
-                if (quantidade === 0) continue;
+                // Calcula quantas cotas dá pra comprar com valorPorAtivo
+                let quantidade = Math.floor(valorPorAtivo / ativo.aplicacaoMinima);
+                if (quantidade === 0) quantidade = 1;
 
                 if (ativo.categoria === 'Fundo') quantidade = 1;
 
                 let valorAlocado = quantidade * ativo.aplicacaoMinima;
 
-                if (valorAlocado > valorRestante) continue;
+                // Se passou do orçamento, ajusta
+                if (valorAlocado > valorRestante) {
+                    quantidade = Math.floor(valorRestante / ativo.aplicacaoMinima);
+                    if (quantidade === 0) continue;
+                    valorAlocado = quantidade * ativo.aplicacaoMinima;
+                }
+
+                if (valorAlocado <= 0) continue;
 
                 carteiraFinal.push({
-                  ...ativo,
+                 ...ativo,
                     quantidade: quantidade,
                     valorAlocado: valorAlocado
                 });
@@ -393,7 +399,7 @@
                     const variacao = dados[crypto.id]?.usd_24h_change || 0;
                     const formatado = variacao.toFixed(2) + '%';
                     const classeVariacao = variacao >= 0
-                   ? "text-xs font-bold text-emerald-400 flex items-center gap-0.5 bg-emerald-500/10 p-1 px-2 rounded-md border border-emerald-500/20 w-fit"
+                  ? "text-xs font-bold text-emerald-400 flex items-center gap-0.5 bg-emerald-500/10 p-1 px-2 rounded-md border border-emerald-500/20 w-fit"
                         : "text-xs font-bold text-red-400 flex items-center gap-0.5 bg-red-500/10 p-1 px-2 rounded-md border border-red-500/20 w-fit";
                     const icone = variacao >= 0? 'trending-up' : 'trending-down';
                     const sinal = variacao >= 0? '+' : '';
