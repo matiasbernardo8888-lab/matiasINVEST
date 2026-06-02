@@ -12,16 +12,16 @@
 
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; }
- .font-logo { font-family: 'Orbitron', sans-serif; }
+.font-logo { font-family: 'Orbitron', sans-serif; }
         input[type=number]::-webkit-inner-spin-button,
         input[type=number]::-webkit-outer-spin-button {
           -webkit-appearance: none;
           margin: 0;
         }
- .card-expand { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
- .card-expand.active { max-height: 600px; }
- .nav-active { color: #06b6d4; }
- .nav-active svg { stroke: #06b6d4; }
+.card-expand { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+.card-expand.active { max-height: 600px; }
+.nav-active { color: #06b6d4; }
+.nav-active svg { stroke: #06b6d4; }
     </style>
 </head>
 <body class="bg-black text-slate-100 min-h-screen pb-24">
@@ -122,7 +122,7 @@
     <script>
         lucide.createIcons();
 
-        // ATIVOS COM ONDE ENCONTRAR CORRETO DA PLANILHA
+        // ATIVOS COM ONDE ENCONTRAR REAL DA PLANILHA
         const carteiraCompleta = [
             { nome: 'CPTS11 - CAPITÂNIA SECURITIES II', subtipo: 'CPTS11', categoria: 'FII', preco: 8.42, aplicacaoMinima: 8.42, peso: 25, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 8.90, dy: 13.26 },
             { nome: 'ITSA4 - ITAÚSA', subtipo: 'ITSA4', categoria: 'Ação', preco: 9.82, aplicacaoMinima: 9.82, peso: 20, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 11.00, dy: 7.8 },
@@ -131,10 +131,8 @@
             { nome: 'SLCE3 - SLC AGRÍCOLA', subtipo: 'SLCE3', categoria: 'Ação', preco: 18.30, aplicacaoMinima: 18.30, peso: 10, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 20.00, dy: 4.2 },
             { nome: 'GOLD11 - GOLD ETF', subtipo: 'Internacional', categoria: 'ETF', preco: 11.95, aplicacaoMinima: 11.95, peso: 5, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: null, dy: null },
             { nome: 'CMIG4 - CEMIG', subtipo: 'CMIG4', categoria: 'Ação', preco: 11.45, aplicacaoMinima: 11.45, peso: 5, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 13.00, dy: 9.1 },
-            { nome: 'WRLD11 (no exterior é o VT)', subtipo: 'Internacional', categoria: 'ETF', preco: 12.80, aplicacaoMinima: 12.80, peso: 0, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: null, dy: null },
-            { nome: 'VALORA VANGUARD', subtipo: '', categoria: 'Fundo', aplicacaoMinima: 100, peso: 0, ondeEncontrar: 'BTG, ITAÚ e XP', precoMaximo: null, dy: null },
-            { nome: 'XPML11 - XP MALLS', subtipo: 'XPML11', categoria: 'FII', preco: 97.20, aplicacaoMinima: 97.20, peso: 0, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 115.00, dy: 10.18 },
             { nome: 'ACE CAPITAL', subtipo: 'Multimercado', categoria: 'Fundo', aplicacaoMinima: 1, peso: 0, ondeEncontrar: 'Ágora, Banco Inter, BB, BTG, C6, Genial, Itaú, NuInvest, Pi/Toro, Safra e XP', precoMaximo: null, dy: null },
+            { nome: 'VALORA VANGUARD', subtipo: '', categoria: 'Fundo', aplicacaoMinima: 100, peso: 0, ondeEncontrar: 'BTG, ITAÚ e XP', precoMaximo: null, dy: null },
             { nome: 'GENOA CAPITAL RADAR', subtipo: 'Multimercado', categoria: 'Fundo', aplicacaoMinima: 500, peso: 0, ondeEncontrar: 'Ágora, Banco Inter, BTG, Genial, Guide, Itaú, NuInvest, Pi/Toro, Safra e XP', precoMaximo: null, dy: null },
             { nome: 'DAHLIA TOTAL RETURN', subtipo: '', categoria: 'Fundo', aplicacaoMinima: 500, peso: 0, ondeEncontrar: 'Ágora, BTG, C6, Daycoval, Genial, Guide, Inter, NuInvest, Pi/Toro e XP', precoMaximo: null, dy: null },
             { nome: 'SOLIS CAPITAL ANTARES PIONEIRO', subtipo: '55.318.040/0001-78', categoria: 'Fundo', aplicacaoMinima: 500, peso: 0, ondeEncontrar: 'BTG e XP', precoMaximo: null, dy: null },
@@ -247,24 +245,41 @@
             else if (valorTotal < 10000) maxAtivos = 7;
             else maxAtivos = 11;
 
-            // FILTRA ATIVOS COM PESO > 0 E QUE CABEM NO ORÇAMENTO
+            // FILTRA ATIVOS - AGORA INCLUI ATIVO SE CABE NO ORÇAMENTO
             let ativosDisponiveis = carteiraCompleta.filter(ativo => {
                 if (filtroAtual!== 'todos' && ativo.categoria!== filtroAtual) return false;
-                if (ativo.peso === 0) return false;
                 return ativo.aplicacaoMinima <= valorInvestir;
             });
+
+            // SE FILTRO DE FUNDO/CRIPTO, MOSTRA MESMO SEM PESO
+            if (filtroAtual === 'Fundo' || filtroAtual === 'Cripto') {
+                ativosDisponiveis = carteiraCompleta.filter(ativo => {
+                    if (ativo.categoria!== filtroAtual) return false;
+                    return ativo.aplicacaoMinima <= valorInvestir;
+                });
+                maxAtivos = ativosDisponiveis.length;
+            } else {
+                // SENÃO, FILTRA SÓ OS COM PESO > 0
+                ativosDisponiveis = ativosDisponiveis.filter(a => a.peso > 0);
+            }
 
             // ALOCAÇÃO POR PESO - DIVERSIFICAÇÃO REAL
             let carteiraFinal = [];
             let valorRestante = valorInvestir;
             let ativosParaAlocar = ativosDisponiveis.slice(0, maxAtivos);
-            let somaPesos = ativosParaAlocar.reduce((acc, a) => acc + a.peso, 0);
+            let somaPesos = ativosParaAlocar.reduce((acc, a) => acc + (a.peso || 1), 0);
 
             for (let i = 0; i < ativosParaAlocar.length && valorRestante >= 1; i++) {
                 const ativo = ativosParaAlocar[i];
 
                 // Calcula valor pra esse ativo baseado no peso
-                let valorAlvo = (valorInvestir * ativo.peso) / somaPesos;
+                let valorAlvo;
+                if (filtroAtual === 'Fundo' || filtroAtual === 'Cripto') {
+                    // Se filtro específico, divide igual
+                    valorAlvo = valorInvestir / ativosParaAlocar.length;
+                } else {
+                    valorAlvo = (valorInvestir * ativo.peso) / somaPesos;
+                }
 
                 // Se o valor alvo for menor que aplicação mínima, pula
                 if (valorAlvo < ativo.aplicacaoMinima) continue;
@@ -284,7 +299,7 @@
                 if (valorAlocado < 1) continue;
 
                 carteiraFinal.push({
-            ...ativo,
+          ...ativo,
                     quantidade: quantidade,
                     valorAlocado: valorAlocado
                 });
@@ -300,7 +315,7 @@
             let listaHTML = '';
 
             if (carteiraFinal.length === 0) {
-                listaHTML = '<p class="text-xs text-amber-400 text-center py-8 bg-amber-500/10 rounded-lg border border-amber-500/20">Valor insuficiente para diversificar. Mínimo: R$ 100,00</p>';
+                listaHTML = '<p class="text-xs text-amber-400 text-center py-8 bg-amber-500/10 rounded-lg border border-amber-500/20">Valor insuficiente. Mínimo: R$ 50,00</p>';
             } else {
                 carteiraFinal.forEach((ativo, index) => {
                     const id = `${ativo.nome.replace(/[^a-zA-Z0-9]/g, '')}-${index}`;
@@ -390,7 +405,7 @@
                     const variacao = dados[crypto.id]?.usd_24h_change || 0;
                     const formatado = variacao.toFixed(2) + '%';
                     const classeVariacao = variacao >= 0
-             ? "text-xs font-bold text-emerald-400 flex items-center gap-0.5 bg-emerald-500/10 p-1 px-2 rounded-md border border-emerald-500/20 w-fit"
+           ? "text-xs font-bold text-emerald-400 flex items-center gap-0.5 bg-emerald-500/10 p-1 px-2 rounded-md border border-emerald-500/20 w-fit"
                         : "text-xs font-bold text-red-400 flex items-center gap-0.5 bg-red-500/10 p-1 px-2 rounded-md border border-red-500/20 w-fit";
                     const icone = variacao >= 0? 'trending-up' : 'trending-down';
                     const sinal = variacao >= 0? '+' : '';
