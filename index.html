@@ -122,7 +122,7 @@
     <script>
         lucide.createIcons();
 
-        // ATIVOS COM NÍVEL MÍNIMO DE APORTE - NÃO MOSTRA CRIPTO PRA R$ 100
+        // ATIVOS COM NÍVEL MÍNIMO DE APORTE - SEM TRAVA DE R$ 100
         const carteiraCompleta = [
             { nome: 'CPTS11 - CAPITÂNIA SECURITIES II', subtipo: 'CPTS11', categoria: 'FII', preco: 8.42, aplicacaoMinima: 8.42, nivelMin: 0, peso: 25, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 8.90, dy: 13.26 },
             { nome: 'ITSA4 - ITAÚSA', subtipo: 'ITSA4', categoria: 'Ação', preco: 9.82, aplicacaoMinima: 9.82, nivelMin: 0, peso: 20, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 11.00, dy: 7.8 },
@@ -131,8 +131,10 @@
             { nome: 'SLCE3 - SLC AGRÍCOLA', subtipo: 'SLCE3', categoria: 'Ação', preco: 18.30, aplicacaoMinima: 18.30, nivelMin: 500, peso: 10, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 20.00, dy: 4.2 },
             { nome: 'GOLD11 - GOLD ETF', subtipo: 'Internacional', categoria: 'ETF', preco: 11.95, aplicacaoMinima: 11.95, nivelMin: 500, peso: 5, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: null, dy: null },
             { nome: 'CMIG4 - CEMIG', subtipo: 'CMIG4', categoria: 'Ação', preco: 11.45, aplicacaoMinima: 11.45, nivelMin: 500, peso: 5, ondeEncontrar: 'Home broker - Qualquer corretora', precoMaximo: 13.00, dy: 9.1 },
-            { nome: 'VALORA VANGUARD', subtipo: '', categoria: 'Fundo', aplicacaoMinima: 100, nivelMin: 1000, peso: 0, ondeEncontrar: 'BTG, ITAÚ e XP', precoMaximo: null, dy: null },
             { nome: 'ACE CAPITAL', subtipo: 'Multimercado', categoria: 'Fundo', aplicacaoMinima: 1, nivelMin: 1000, peso: 0, ondeEncontrar: 'Ágora, Banco Inter, BB, BTG, C6, Genial, Itaú, NuInvest, Pi/Toro, Safra e XP', precoMaximo: null, dy: null },
+            { nome: 'VALORA VANGUARD', subtipo: '', categoria: 'Fundo', aplicacaoMinima: 100, nivelMin: 1000, peso: 0, ondeEncontrar: 'BTG, ITAÚ e XP', precoMaximo: null, dy: null },
+            { nome: 'GENOA CAPITAL RADAR', subtipo: 'Multimercado', categoria: 'Fundo', aplicacaoMinima: 500, nivelMin: 1000, peso: 0, ondeEncontrar: 'Ágora, Banco Inter, BTG, Genial, Guide, Itaú, NuInvest, Pi/Toro, Safra e XP', precoMaximo: null, dy: null },
+            { nome: 'DAHLIA TOTAL RETURN', subtipo: '', categoria: 'Fundo', aplicacaoMinima: 500, nivelMin: 1000, peso: 0, ondeEncontrar: 'Ágora, BTG, C6, Daycoval, Genial, Guide, Inter, NuInvest, Pi/Toro e XP', precoMaximo: null, dy: null },
             { nome: 'BITCOIN', subtipo: 'Teses alternativas', categoria: 'Cripto', aplicacaoMinima: 50, nivelMin: 5000, peso: 0, ondeEncontrar: 'Mercado Bitcoin, Binance, Foxbit, NovaDAX, B3 via ETF HASH11', precoMaximo: null, dy: null }
         ];
 
@@ -233,32 +235,31 @@
             const nomeLiquidez = liquidezSelecionada === 'porquinho'? 'Porquinho Inter' : 'Caixinha Nubank';
             const corLiquidez = liquidezSelecionada === 'porquinho'? 'amber' : 'purple';
 
-            // DEFINE QUANTOS ATIVOS E QUAIS LIBERAR
+            // DEFINE QUANTOS ATIVOS MÁXIMO E NÍVEL PERMITIDO
             let maxAtivos;
             let nivelPermitido;
             if (valorTotal < 500) {
                 maxAtivos = 2;
-                nivelPermitido = 0; // Só FII e Ação barata
+                nivelPermitido = 0;
             } else if (valorTotal < 5000) {
                 maxAtivos = 3;
-                nivelPermitido = 500; // Libera mais ações e ETF
+                nivelPermitido = 500;
             } else if (valorTotal < 10000) {
                 maxAtivos = 7;
-                nivelPermitido = 1000; // Libera fundos
+                nivelPermitido = 1000;
             } else {
                 maxAtivos = 11;
-                nivelPermitido = 5000; // Libera tudo incluindo cripto
+                nivelPermitido = 5000;
             }
 
-            // FILTRA ATIVOS - SÓ MOSTRA SE O APORTE FOR >= nivelMin
+            // FILTRA ATIVOS - SÓ MOSTRA SE O APORTE FOR >= nivelMin DO ATIVO
             let ativosDisponiveis = carteiraCompleta.filter(ativo => {
                 if (filtroAtual!== 'todos' && ativo.categoria!== filtroAtual) return false;
                 if (ativo.nivelMin > valorTotal) return false;
-                if (filtroAtual === 'todos' && ativo.peso === 0 && valorTotal < ativo.nivelMin) return false;
                 return ativo.aplicacaoMinima <= valorInvestir;
             });
 
-            // SE FILTRO ESPECÍFICO, IGNORA PESO
+            // SE FILTRO ESPECÍFICO, MOSTRA TUDO DAQUELE TIPO QUE CABE
             if (filtroAtual!== 'todos') {
                 ativosDisponiveis = carteiraCompleta.filter(ativo => {
                     if (ativo.categoria!== filtroAtual) return false;
@@ -266,11 +267,11 @@
                 });
                 maxAtivos = ativosDisponiveis.length;
             } else {
-                // SENÃO, FILTRA SÓ OS COM PESO > 0
+                // SENÃO, FILTRA SÓ OS COM PESO > 0 PARA DIVERSIFICAÇÃO
                 ativosDisponiveis = ativosDisponiveis.filter(a => a.peso > 0);
             }
 
-            // ALOCAÇÃO POR PESO
+            // ALOCAÇÃO POR PESO - SEM TRAVA DE R$ 100
             let carteiraFinal = [];
             let valorRestante = valorInvestir;
             let ativosParaAlocar = ativosDisponiveis.slice(0, maxAtivos);
@@ -279,7 +280,6 @@
             for (let i = 0; i < ativosParaAlocar.length && valorRestante >= 1; i++) {
                 const ativo = ativosParaAlocar[i];
 
-                // Calcula valor pra esse ativo
                 let valorAlvo;
                 if (filtroAtual!== 'todos') {
                     valorAlvo = valorInvestir / ativosParaAlocar.length;
@@ -303,7 +303,7 @@
                 if (valorAlocado < 1) continue;
 
                 carteiraFinal.push({
-        ...ativo,
+     ...ativo,
                     quantidade: quantidade,
                     valorAlocado: valorAlocado
                 });
@@ -409,7 +409,7 @@
                     const variacao = dados[crypto.id]?.usd_24h_change || 0;
                     const formatado = variacao.toFixed(2) + '%';
                     const classeVariacao = variacao >= 0
-         ? "text-xs font-bold text-emerald-400 flex items-center gap-0.5 bg-emerald-500/10 p-1 px-2 rounded-md border border-emerald-500/20 w-fit"
+      ? "text-xs font-bold text-emerald-400 flex items-center gap-0.5 bg-emerald-500/10 p-1 px-2 rounded-md border border-emerald-500/20 w-fit"
                         : "text-xs font-bold text-red-400 flex items-center gap-0.5 bg-red-500/10 p-1 px-2 rounded-md border border-red-500/20 w-fit";
                     const icone = variacao >= 0? 'trending-up' : 'trending-down';
                     const sinal = variacao >= 0? '+' : '';
@@ -424,7 +424,6 @@
                                 <div class="w-6 h-6 rounded-full flex items-center justify-center" style="background-color: ${crypto.color}20; border: 1px solid ${crypto.color}40; color: ${crypto.color}">
                                     <i data-lucide="activity" class="w-3 h-3"></i>
                                 </div>
-                            </div>
                             <div class="space-y-1">
                                 <div class="text-sm font-black font-logo tracking-wide text-white">$${preco.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
                                 <div class="${classeVariacao}">
