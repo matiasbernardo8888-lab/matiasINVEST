@@ -19,9 +19,10 @@
           margin: 0; 
         }
         .card-expand { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-        .card-expand.active { max-height: 500px; }
+        .card-expand.active { max-height: 600px; }
         .nav-active { color: #06b6d4; }
         .nav-active svg { stroke: #06b6d4; }
+        .toggle-liquid { transition: all 0.2s; }
     </style>
 </head>
 <body class="bg-black text-slate-100 min-h-screen pb-24">
@@ -38,11 +39,25 @@
                 </div>
             </div>
             
-            <div class="bg-slate-950 p-3 rounded-xl border border-slate-900 space-y-2">
+            <div class="bg-slate-950 p-3 rounded-xl border border-slate-900 space-y-3">
                 <label class="text-xs font-medium text-slate-400">SIMULAR APORTE</label>
                 <div class="relative">
                     <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 font-bold text-sm">R$</span>
                     <input type="number" id="input-valor-total" value="30000" placeholder="30000" class="w-full bg-slate-900 border border-slate-800 rounded-lg pl-10 pr-4 py-2.5 text-white font-bold font-logo focus:outline-none focus:border-cyan-500 transition" oninput="gerarCarteira()">
+                </div>
+                
+                <!-- TOGGLE LIQUIDEZ -->
+                <div class="pt-2 border-t border-slate-800">
+                    <label class="text-xs font-medium text-slate-400 mb-2 block">RESERVA DE LIQUIDEZ D+0</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button id="btn-porquinho" onclick="selecionarLiquidez('porquinho')" class="toggle-liquid px-3 py-2 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center gap-1.5">
+                            <i data-lucide="piggy-bank" class="w-4 h-4"></i> Porquinho Inter
+                        </button>
+                        <button id="btn-nubank" onclick="selecionarLiquidez('nubank')" class="toggle-liquid px-3 py-2 rounded-lg text-xs font-bold bg-slate-900 text-slate-500 border border-slate-800 flex items-center justify-center gap-1.5">
+                            <i data-lucide="wallet" class="w-4 h-4"></i> Caixinha Nubank
+                        </button>
+                    </div>
+                    <div id="aviso-liquidez" class="text-xs text-amber-400 bg-amber-500/10 p-2 rounded border border-amber-500/20 mt-2"></div>
                 </div>
             </div>
 
@@ -105,9 +120,9 @@
     <script>
         lucide.createIcons();
         
-        // CARTEIRA COMPLETA - DADOS DOS PRINTS + PREÇOS ATUAIS
+        // CARTEIRA COMPLETA - DADOS EXATOS DOS PRINTS
         const carteiraCompleta = [
-            // FUNDOS MULTIMERCADO
+            // FUNDOS MULTIMERCADO E AÇÕES
             { 
                 nome: 'IBIUNA EQUITIES RESP LIMITADA FIF CIC', 
                 subtipo: 'AÇÕES', 
@@ -117,7 +132,8 @@
                 aplicacaoMinima: 1000,
                 ondeEncontrar: 'C6 Bank, Inter, Genial, Toro e XP',
                 precoMaximo: null,
-                dy: null
+                dy: null,
+                cor: '#3b82f6'
             },
             { 
                 nome: 'ACE CAPITAL', 
@@ -127,7 +143,8 @@
                 aplicacaoMinima: 1,
                 ondeEncontrar: 'Ágora, Banco Inter, BB, BTG, C6, Genial, Itaú, NuInvest, Pi / Toro, Safra e XP',
                 precoMaximo: null,
-                dy: null
+                dy: null,
+                cor: '#8b5cf6'
             },
             { 
                 nome: 'GENOA CAPITAL RADAR', 
@@ -137,7 +154,8 @@
                 aplicacaoMinima: 500,
                 ondeEncontrar: 'Ágora, Banco Inter, BTG, Genial, Guide, Itaú, NuInvest, Pi/Toro, Safra e XP',
                 precoMaximo: null,
-                dy: null
+                dy: null,
+                cor: '#a855f7'
             },
             { 
                 nome: 'DAHLIA TOTAL RETURN', 
@@ -147,7 +165,8 @@
                 aplicacaoMinima: 500,
                 ondeEncontrar: 'Ágora, BTG, C6, Daycoval, Genial, Guide, Inter, NuInvest, Pi/Toro e XP',
                 precoMaximo: null,
-                dy: null
+                dy: null,
+                cor: '#ec4899'
             },
             { 
                 nome: 'SPX SEAHAWK', 
@@ -157,7 +176,8 @@
                 aplicacaoMinima: 1000,
                 ondeEncontrar: 'C6, BTG, Genial, Guide, Inter, Itaú, Pi/Toro, Safra e XP',
                 precoMaximo: null,
-                dy: null
+                dy: null,
+                cor: '#06b6d4'
             },
             { 
                 nome: 'VALORA VANGUARD', 
@@ -167,7 +187,8 @@
                 aplicacaoMinima: 100,
                 ondeEncontrar: 'BTG, ITAÚ e XP',
                 precoMaximo: null,
-                dy: null
+                dy: null,
+                cor: '#14b8a6'
             },
             { 
                 nome: 'SOLIS CAPITAL ANTARES PIONEIRO', 
@@ -177,7 +198,8 @@
                 aplicacaoMinima: 500,
                 ondeEncontrar: 'BTG e XP',
                 precoMaximo: null,
-                dy: null
+                dy: null,
+                cor: '#f59e0b'
             },
             { 
                 nome: 'FUNDOS PASSIVOS AO IMA-B', 
@@ -187,7 +209,8 @@
                 aplicacaoMinima: 100,
                 ondeEncontrar: 'Home broker',
                 precoMaximo: null,
-                dy: null
+                dy: null,
+                cor: '#84cc16'
             },
 
             // ETFs INTERNACIONAIS
@@ -199,7 +222,8 @@
                 aplicacaoMinima: null,
                 ondeEncontrar: 'Home broker',
                 precoMaximo: null,
-                dy: null
+                dy: null,
+                cor: '#6366f1'
             },
             { 
                 nome: 'USDB11 (no exterior é o BND)', 
@@ -209,7 +233,8 @@
                 aplicacaoMinima: null,
                 ondeEncontrar: 'Home broker',
                 precoMaximo: null,
-                dy: null
+                dy: null,
+                cor: '#8b5cf6'
             },
             { 
                 nome: 'GOLD11 (no exterior é o IAU)', 
@@ -219,7 +244,8 @@
                 aplicacaoMinima: null,
                 ondeEncontrar: 'Home broker',
                 precoMaximo: null,
-                dy: null
+                dy: null,
+                cor: '#eab308'
             },
 
             // FIIs
@@ -231,7 +257,8 @@
                 aplicacaoMinima: null,
                 ondeEncontrar: 'Home broker',
                 precoMaximo: null,
-                dy: null
+                dy: null,
+                cor: '#22d3ee'
             },
             { 
                 nome: 'IFRA11 (ITAÚ FICFIDC DE INFRAESTRUTURA)', 
@@ -241,7 +268,8 @@
                 aplicacaoMinima: null,
                 ondeEncontrar: 'Home broker',
                 precoMaximo: null,
-                dy: null
+                dy: null,
+                cor: '#0ea5e9'
             },
             { 
                 nome: 'XPML11 - XP MALLS', 
@@ -251,7 +279,8 @@
                 aplicacaoMinima: null,
                 ondeEncontrar: 'Home broker',
                 precoMaximo: 115.00,
-                dy: 10.18
+                dy: 10.18,
+                cor: '#f97316'
             },
             { 
                 nome: 'CPTS11 - CAPITÂNIA SECURITIES II', 
@@ -261,7 +290,8 @@
                 aplicacaoMinima: null,
                 ondeEncontrar: 'Home broker',
                 precoMaximo: 8.90,
-                dy: 13.26
+                dy: 13.26,
+                cor: '#06b6d4'
             },
             { 
                 nome: 'PVBI11 - VBI PRIME PROPERTIES', 
@@ -271,7 +301,8 @@
                 aplicacaoMinima: null,
                 ondeEncontrar: 'Home broker',
                 precoMaximo: 110.00,
-                dy: 7.11
+                dy: 7.11,
+                cor: '#0ea5e9'
             },
             { 
                 nome: 'PSEC11 - PÁTRIA SECURITIES', 
@@ -281,7 +312,8 @@
                 aplicacaoMinima: null,
                 ondeEncontrar: 'Home broker',
                 precoMaximo: 81.00,
-                dy: 13.23
+                dy: 13.23,
+                cor: '#22d3ee'
             },
 
             // CRIPTO
@@ -293,11 +325,32 @@
                 aplicacaoMinima: null,
                 ondeEncontrar: 'Home broker',
                 precoMaximo: null,
-                dy: null
+                dy: null,
+                cor: '#f7931a'
             }
         ];
         
         let filtroAtual = 'todos';
+        let liquidezSelecionada = 'porquinho'; // porquinho ou nubank
+        
+        function selecionarLiquidez(tipo) {
+            liquidezSelecionada = tipo;
+            const btnPorquinho = document.getElementById('btn-porquinho');
+            const btnNubank = document.getElementById('btn-nubank');
+            
+            if (tipo === 'porquinho') {
+                btnPorquinho.classList.add('bg-amber-500/20', 'text-amber-400', 'border-amber-500/40');
+                btnPorquinho.classList.remove('bg-slate-900', 'text-slate-500', 'border-slate-800');
+                btnNubank.classList.remove('bg-purple-500/20', 'text-purple-400', 'border-purple-500/40');
+                btnNubank.classList.add('bg-slate-900', 'text-slate-500', 'border-slate-800');
+            } else {
+                btnNubank.classList.add('bg-purple-500/20', 'text-purple-400', 'border-purple-500/40');
+                btnNubank.classList.remove('bg-slate-900', 'text-slate-500', 'border-slate-800');
+                btnPorquinho.classList.remove('bg-amber-500/20', 'text-amber-400', 'border-amber-500/40');
+                btnPorquinho.classList.add('bg-slate-900', 'text-slate-500', 'border-slate-800');
+            }
+            gerarCarteira();
+        }
         
         function filtrarCategoria(cat) {
             filtroAtual = cat;
@@ -328,6 +381,19 @@
             
             document.getElementById('valor-aporte-display').innerText = valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
             
+            // REGRA DE LIQUIDEZ
+            let percLiquidez;
+            if (valorTotal < 2000) percLiquidez = 0.40;
+            else if (valorTotal < 10000) percLiquidez = 0.25;
+            else percLiquidez = 0.15;
+            
+            const valorLiquidez = Math.floor(valorTotal * percLiquidez);
+            const nomeLiquidez = liquidezSelecionada === 'porquinho' ? 'Porquinho Inter' : 'Caixinha Nubank';
+            const corLiquidez = liquidezSelecionada === 'porquinho' ? 'amber' : 'purple';
+            
+            document.getElementById('aviso-liquidez').innerHTML = `<i data-lucide="${liquidezSelecionada === 'porquinho' ? 'piggy-bank' : 'wallet'}" class="w-3 h-3 inline"></i> Reserva: ${valorLiquidez.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} em ${nomeLiquidez} | D+0`;
+            document.getElementById('aviso-liquidez').className = `text-xs text-${corLiquidez}-400 bg-${corLiquidez}-500/10 p-2 rounded border border-${corLiquidez}-500/20 mt-2`;
+            
             let listaHTML = '';
             let carteiraFiltrada = filtroAtual === 'todos' ? carteiraCompleta : carteiraCompleta.filter(a => a.categoria === filtroAtual);
             
@@ -341,7 +407,7 @@
                             <div class="flex justify-between items-start mb-3">
                                 <div class="flex-1">
                                     <h3 class="text-sm font-bold text-white mb-0.5">${ativo.nome}</h3>
-                                    <p class="text-xs text-slate-500">${ativo.subtipo || ativo.categoria}</p>
+                                    <p class="text-xs text-slate-500">${ativo.subtipo || ativo.cnpj || ativo.categoria}</p>
                                 </div>
                                 <i id="icon-${id}" data-lucide="chevron-down" class="w-5 h-5 text-cyan-500 transition-transform"></i>
                             </div>
