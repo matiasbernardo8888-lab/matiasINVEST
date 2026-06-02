@@ -9,19 +9,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; }
-        .font-logo { font-family: 'Orbitron', sans-serif; }
-        input[type=number]::-webkit-inner-spin-button, 
-        input[type=number]::-webkit-outer-spin-button { 
-          -webkit-appearance: none; 
-          margin: 0; 
+      .font-logo { font-family: 'Orbitron', sans-serif; }
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
         }
-        .card-expand { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-        .card-expand.active { max-height: 600px; }
-        .nav-active { color: #06b6d4; }
-        .nav-active svg { stroke: #06b6d4; }
+      .card-expand { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+      .card-expand.active { max-height: 600px; }
+      .nav-active { color: #06b6d4; }
+      .nav-active svg { stroke: #06b6d4; }
     </style>
 </head>
 <body class="bg-black text-slate-100 min-h-screen pb-24">
@@ -37,14 +37,14 @@
                     <div id="valor-aporte-display" class="text-xl font-black text-cyan-400 font-logo">R$ 0,00</div>
                 </div>
             </div>
-            
+
             <div class="bg-slate-950 p-3 rounded-xl border border-slate-900 space-y-3">
                 <label class="text-xs font-medium text-slate-400">SIMULAR APORTE</label>
                 <div class="relative">
                     <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 font-bold text-sm">R$</span>
                     <input type="text" id="input-valor-total" placeholder="0,00" class="w-full bg-slate-900 border border-slate-800 rounded-lg pl-10 pr-4 py-2.5 text-white font-bold font-logo focus:outline-none focus:border-cyan-500 transition">
                 </div>
-                
+
                 <!-- TOGGLE LIQUIDEZ -->
                 <div class="pt-2 border-t border-slate-800">
                     <label class="text-xs font-medium text-slate-400 mb-2 block">RESERVA DE LIQUIDEZ D+0</label>
@@ -130,50 +130,36 @@
             </div>
         </nav>
     </div>
-    
+
     <script>
         lucide.createIcons();
-        
-        // CARTEIRA COMPLETA - ORDEM DE PRIORIDADE POR PREÇO
+
+        // ATIVOS ORDENADOS POR PREÇO - DO MAIS BARATO PRO MAIS CARO
         const carteiraCompleta = [
-            // PRIORIDADE 1 - ATIVOS BARATOS < R$ 20
-            { nome: 'CPTS11 - CAPITÂNIA SECURITIES II', subtipo: 'CPTS11', categoria: 'FII', alocacao: 12, preco: 8.42, aplicacaoMinima: 8.42, ondeEncontrar: 'Home broker', precoMaximo: 8.90, dy: 13.26, prioridade: 1 },
-            { nome: 'ITSA4 - ITAÚSA', subtipo: 'ITSA4', categoria: 'Ação', alocacao: 10, preco: 9.82, aplicacaoMinima: 9.82, ondeEncontrar: 'Home broker', precoMaximo: 11.00, dy: 7.8, prioridade: 1 },
-            { nome: 'PSEC11 - PÁTRIA SECURITIES', subtipo: 'PSEC11', categoria: 'FII', alocacao: 10, preco: 9.75, aplicacaoMinima: 9.75, ondeEncontrar: 'Home broker', precoMaximo: 81.00, dy: 13.23, prioridade: 1 },
-            { nome: 'CMIG4 - CEMIG', subtipo: 'CMIG4', categoria: 'Ação', alocacao: 10, preco: 11.45, aplicacaoMinima: 11.45, ondeEncontrar: 'Home broker', precoMaximo: 13.00, dy: 9.1, prioridade: 1 },
-            { nome: 'GOLD11 - GOLD ETF', subtipo: 'Internacional', categoria: 'ETF', alocacao: 8, preco: 11.95, aplicacaoMinima: 11.95, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null, prioridade: 1 },
-            { nome: 'WRLD11 (no exterior é o VT)', subtipo: 'Internacional', categoria: 'ETF', alocacao: 8, preco: 12.80, aplicacaoMinima: 12.80, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null, prioridade: 1 },
-            { nome: 'SLCE3 - SLC AGRÍCOLA', subtipo: 'SLCE3', categoria: 'Ação', alocacao: 12, preco: 18.30, aplicacaoMinima: 18.30, ondeEncontrar: 'Home broker', precoMaximo: 20.00, dy: 4.2, prioridade: 1 },
-
-            // PRIORIDADE 2 - ATIVOS MÉDIOS R$ 20-50
-            { nome: 'BBSE3 - BB SEGURIDADE', subtipo: 'BBSE3', categoria: 'Ação', alocacao: 15, preco: 33.85, aplicacaoMinima: 33.85, ondeEncontrar: 'Home broker', precoMaximo: 36.00, dy: 8.5, prioridade: 2 },
-
-            // PRIORIDADE 3 - FUNDOS BARATOS
-            { nome: 'ACE CAPITAL', subtipo: 'Multimercado', categoria: 'Fundo', alocacao: 6, aplicacaoMinima: 1, ondeEncontrar: 'Ágora, Banco Inter, BB, BTG, C6, Genial, Itaú, NuInvest, Pi / Toro, Safra e XP', precoMaximo: null, dy: null, prioridade: 3 },
-            { nome: 'VALORA VANGUARD', subtipo: '', categoria: 'Fundo', alocacao: 5, aplicacaoMinima: 100, ondeEncontrar: 'BTG, ITAÚ e XP', precoMaximo: null, dy: null, prioridade: 3 },
-            { nome: 'FUNDOS PASSIVOS AO IMA-B', subtipo: '', categoria: 'Fundo', alocacao: 10, aplicacaoMinima: 100, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null, prioridade: 3 },
-
-            // PRIORIDADE 4 - FUNDOS MÉDIOS
-            { nome: 'GENOA CAPITAL RADAR', subtipo: 'Multimercado', categoria: 'Fundo', alocacao: 6, aplicacaoMinima: 500, ondeEncontrar: 'Ágora, Banco Inter, BTG, Genial, Guide, Itaú, NuInvest, Pi/Toro, Safra e XP', precoMaximo: null, dy: null, prioridade: 4 },
-            { nome: 'DAHLIA TOTAL RETURN', subtipo: '', categoria: 'Fundo', alocacao: 5, aplicacaoMinima: 500, ondeEncontrar: 'Ágora, BTG, C6, Daycoval, Genial, Guide, Inter, NuInvest, Pi/Toro e XP', precoMaximo: null, dy: null, prioridade: 4 },
-            { nome: 'SOLIS CAPITAL ANTARES PIONEIRO', subtipo: '55.318.040/0001-78', categoria: 'Fundo', alocacao: 5, aplicacaoMinima: 500, ondeEncontrar: 'BTG e XP', precoMaximo: null, dy: null, prioridade: 4 },
-
-            // PRIORIDADE 5 - FUNDOS CAROS
-            { nome: 'IBIUNA EQUITIES RESP LIMITADA FIF CIC', subtipo: 'AÇÕES', cnpj: '13.401.715/0001-06', categoria: 'Fundo', alocacao: 10, aplicacaoMinima: 1000, ondeEncontrar: 'C6 Bank, Inter, Genial, Toro e XP', precoMaximo: null, dy: null, prioridade: 5 },
-            { nome: 'SPX SEAHAWK', subtipo: '', categoria: 'Fundo', alocacao: 5, aplicacaoMinima: 1000, ondeEncontrar: 'C6, BTG, Genial, Guide, Inter, Itaú, Pi/Toro, Safra e XP', precoMaximo: null, dy: null, prioridade: 5 },
-
-            // PRIORIDADE 6 - FIIs CAROS
-            { nome: 'XPML11 - XP MALLS', subtipo: 'XPML11', categoria: 'FII', alocacao: 5, preco: 97.20, aplicacaoMinima: 97.20, ondeEncontrar: 'Home broker', precoMaximo: 115.00, dy: 10.18, prioridade: 6 },
-            { nome: 'PVBI11 - VBI PRIME PROPERTIES', subtipo: 'PVBI11', categoria: 'FII', alocacao: 3, preco: 98.50, aplicacaoMinima: 98.50, ondeEncontrar: 'Home broker', precoMaximo: 110.00, dy: 7.11, prioridade: 6 },
-            { nome: 'KDIF11 (KINEA INFRA RENDA FIXA)', subtipo: 'Renda Fixa Dinâmica', categoria: 'FII', alocacao: 5, preco: 102.30, aplicacaoMinima: 102.30, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null, prioridade: 6 },
-            { nome: 'IFRA11 (ITAÚ FICFIDC DE INFRAESTRUTURA)', subtipo: 'Renda Fixa Dinâmica', categoria: 'FII', alocacao: 5, preco: 101.30, aplicacaoMinima: 101.30, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null, prioridade: 6 },
-            { nome: 'USDB11 (no exterior é o BND)', subtipo: 'Internacional', categoria: 'ETF', alocacao: 4, preco: 114.60, aplicacaoMinima: 114.60, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null, prioridade: 6 },
-
-            // PRIORIDADE 7 - CRIPTO (só pra valor alto)
-            { nome: 'BITCOIN', subtipo: 'Teses alternativas', categoria: 'Cripto', alocacao: 3, aplicacaoMinima: 50, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null, prioridade: 7 }
+            { nome: 'CPTS11 - CAPITÂNIA SECURITIES II', subtipo: 'CPTS11', categoria: 'FII', preco: 8.42, aplicacaoMinima: 8.42, ondeEncontrar: 'Home broker', precoMaximo: 8.90, dy: 13.26 },
+            { nome: 'ITSA4 - ITAÚSA', subtipo: 'ITSA4', categoria: 'Ação', preco: 9.82, aplicacaoMinima: 9.82, ondeEncontrar: 'Home broker', precoMaximo: 11.00, dy: 7.8 },
+            { nome: 'PSEC11 - PÁTRIA SECURITIES', subtipo: 'PSEC11', categoria: 'FII', preco: 9.75, aplicacaoMinima: 9.75, ondeEncontrar: 'Home broker', precoMaximo: 81.00, dy: 13.23 },
+            { nome: 'CMIG4 - CEMIG', subtipo: 'CMIG4', categoria: 'Ação', preco: 11.45, aplicacaoMinima: 11.45, ondeEncontrar: 'Home broker', precoMaximo: 13.00, dy: 9.1 },
+            { nome: 'GOLD11 - GOLD ETF', subtipo: 'Internacional', categoria: 'ETF', preco: 11.95, aplicacaoMinima: 11.95, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null },
+            { nome: 'WRLD11 (no exterior é o VT)', subtipo: 'Internacional', categoria: 'ETF', preco: 12.80, aplicacaoMinima: 12.80, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null },
+            { nome: 'SLCE3 - SLC AGRÍCOLA', subtipo: 'SLCE3', categoria: 'Ação', preco: 18.30, aplicacaoMinima: 18.30, ondeEncontrar: 'Home broker', precoMaximo: 20.00, dy: 4.2 },
+            { nome: 'BBSE3 - BB SEGURIDADE', subtipo: 'BBSE3', categoria: 'Ação', preco: 33.85, aplicacaoMinima: 33.85, ondeEncontrar: 'Home broker', precoMaximo: 36.00, dy: 8.5 },
+            { nome: 'XPML11 - XP MALLS', subtipo: 'XPML11', categoria: 'FII', preco: 97.20, aplicacaoMinima: 97.20, ondeEncontrar: 'Home broker', precoMaximo: 115.00, dy: 10.18 },
+            { nome: 'PVBI11 - VBI PRIME PROPERTIES', subtipo: 'PVBI11', categoria: 'FII', preco: 98.50, aplicacaoMinima: 98.50, ondeEncontrar: 'Home broker', precoMaximo: 110.00, dy: 7.11 },
+            { nome: 'KDIF11 (KINEA INFRA RENDA FIXA)', subtipo: 'Renda Fixa Dinâmica', categoria: 'FII', preco: 102.30, aplicacaoMinima: 102.30, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null },
+            { nome: 'IFRA11 (ITAÚ FICFIDC DE INFRAESTRUTURA)', subtipo: 'Renda Fixa Dinâmica', categoria: 'FII', preco: 101.30, aplicacaoMinima: 101.30, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null },
+            { nome: 'USDB11 (no exterior é o BND)', subtipo: 'Internacional', categoria: 'ETF', preco: 114.60, aplicacaoMinima: 114.60, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null },
+            { nome: 'ACE CAPITAL', subtipo: 'Multimercado', categoria: 'Fundo', aplicacaoMinima: 1, ondeEncontrar: 'Ágora, Banco Inter, BB, BTG, C6, Genial, Itaú, NuInvest, Pi / Toro, Safra e XP', precoMaximo: null, dy: null },
+            { nome: 'VALORA VANGUARD', subtipo: '', categoria: 'Fundo', aplicacaoMinima: 100, ondeEncontrar: 'BTG, ITAÚ e XP', precoMaximo: null, dy: null },
+            { nome: 'FUNDOS PASSIVOS AO IMA-B', subtipo: '', categoria: 'Fundo', aplicacaoMinima: 100, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null },
+            { nome: 'GENOA CAPITAL RADAR', subtipo: 'Multimercado', categoria: 'Fundo', aplicacaoMinima: 500, ondeEncontrar: 'Ágora, Banco Inter, BTG, Genial, Guide, Itaú, NuInvest, Pi/Toro, Safra e XP', precoMaximo: null, dy: null },
+            { nome: 'DAHLIA TOTAL RETURN', subtipo: '', categoria: 'Fundo', aplicacaoMinima: 500, ondeEncontrar: 'Ágora, BTG, C6, Daycoval, Genial, Guide, Inter, NuInvest, Pi/Toro e XP', precoMaximo: null, dy: null },
+            { nome: 'SOLIS CAPITAL ANTARES PIONEIRO', subtipo: '55.318.040/0001-78', categoria: 'Fundo', aplicacaoMinima: 500, ondeEncontrar: 'BTG e XP', precoMaximo: null, dy: null },
+            { nome: 'IBIUNA EQUITIES RESP LIMITADA FIF CIC', subtipo: 'AÇÕES', cnpj: '13.401.715/0001-06', categoria: 'Fundo', aplicacaoMinima: 1000, ondeEncontrar: 'C6 Bank, Inter, Genial, Toro e XP', precoMaximo: null, dy: null },
+            { nome: 'SPX SEAHAWK', subtipo: '', categoria: 'Fundo', aplicacaoMinima: 1000, ondeEncontrar: 'C6, BTG, Genial, Guide, Inter, Itaú, Pi/Toro, Safra e XP', precoMaximo: null, dy: null },
+            { nome: 'BITCOIN', subtipo: 'Teses alternativas', categoria: 'Cripto', aplicacaoMinima: 50, ondeEncontrar: 'Home broker', precoMaximo: null, dy: null }
         ];
 
-        // TOP 15 CRIPTOS
         const topCryptos = [
             { id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin', color: '#f7931a' },
             { id: 'ethereum', symbol: 'ETH', name: 'Ethereum', color: '#627eea' },
@@ -191,11 +177,10 @@
             { id: 'litecoin', symbol: 'LTC', name: 'Litecoin', color: '#345d9d' },
             { id: 'uniswap', symbol: 'UNI', name: 'Uniswap', color: '#ff007a' }
         ];
-        
+
         let filtroAtual = 'todos';
         let liquidezSelecionada = 'porquinho';
-        
-        // FORMATAÇÃO DE MOEDA
+
         function formatarMoeda(input) {
             let valor = input.value.replace(/\D/g, '');
             if (valor === '') {
@@ -209,18 +194,18 @@
             input.value = valor;
             gerarCarteira();
         }
-        
+
         function obterValorNumerico() {
             const input = document.getElementById('input-valor-total').value;
             if (!input) return 0;
             return parseFloat(input.replace(/\./g, '').replace(',', '.')) || 0;
         }
-        
+
         function selecionarLiquidez(tipo) {
             liquidezSelecionada = tipo;
             const btnPorquinho = document.getElementById('btn-porquinho');
             const btnNubank = document.getElementById('btn-nubank');
-            
+
             if (tipo === 'porquinho') {
                 btnPorquinho.classList.add('bg-amber-500/20', 'text-amber-400', 'border-amber-500/40');
                 btnPorquinho.classList.remove('bg-slate-900', 'text-slate-500', 'border-slate-800');
@@ -234,7 +219,7 @@
             }
             gerarCarteira();
         }
-        
+
         function filtrarCategoria(cat) {
             filtroAtual = cat;
             document.querySelectorAll('.filtro-btn').forEach(btn => {
@@ -245,163 +230,174 @@
             event.target.classList.remove('bg-slate-900', 'text-slate-400', 'border-slate-800');
             gerarCarteira();
         }
-        
+
         function toggleCard(id) {
             const card = document.getElementById(`expand-${id}`);
             const icon = document.getElementById(`icon-${id}`);
             card.classList.toggle('active');
-            icon.style.transform = card.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+            icon.style.transform = card.classList.contains('active')? 'rotate(180deg)' : 'rotate(0deg)';
         }
-        
+
         function gerarCarteira() {
             const valorTotal = obterValorNumerico();
             const aviso = document.getElementById('aviso-liquidez');
-            
+
             if (valorTotal <= 0) {
                 document.getElementById('lista-ativos').innerHTML = '<p class="text-xs text-slate-500 text-center py-8">Digite um valor acima para gerar sua carteira</p>';
                 document.getElementById('valor-aporte-display').innerText = 'R$ 0,00';
                 aviso.classList.add('hidden');
                 return;
             }
-            
+
             document.getElementById('valor-aporte-display').innerText = valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-            
-            // REGRA DE LIQUIDEZ
-            let percLiquidez;
-            if (valorTotal < 2000) percLiquidez = 0.40;
-            else if (valorTotal < 10000) percLiquidez = 0.25;
-            else percLiquidez = 0.15;
-            
-            const valorLiquidez = Math.floor(valorTotal * percLiquidez);
-            const valorInvestir = valorTotal - valorLiquidez;
-            const nomeLiquidez = liquidezSelecionada === 'porquinho' ? 'Porquinho Inter' : 'Caixinha Nubank';
-            const corLiquidez = liquidezSelecionada === 'porquinho' ? 'amber' : 'purple';
-            
-            aviso.innerHTML = `<i data-lucide="${liquidezSelecionada === 'porquinho' ? 'piggy-bank' : 'wallet'}" class="w-3 h-3 inline"></i> Reserva: ${valorLiquidez.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} em ${nomeLiquidez} | Investindo: ${valorInvestir.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`;
+
+            // REGRA DE LIQUIDEZ: 40% sempre
+            const valorLiquidez = Math.floor(valorTotal * 0.40);
+            let valorInvestir = valorTotal - valorLiquidez;
+            const nomeLiquidez = liquidezSelecionada === 'porquinho'? 'Porquinho Inter' : 'Caixinha Nubank';
+            const corLiquidez = liquidezSelecionada === 'porquinho'? 'amber' : 'purple';
+
+            // DEFINE QUANTOS ATIVOS MÁXIMO - SUA REGRA
+            let maxAtivos;
+            if (valorTotal < 500) maxAtivos = 2; // 1 liquidez + 2 ativos = 3 total
+            else if (valorTotal < 5000) maxAtivos = 3; // 1 liquidez + 3 ativos = 4 total
+            else if (valorTotal < 10000) maxAtivos = 7; // 1 liquidez + 7 ativos = 8 total
+            else maxAtivos = 11; // 1 liquidez + 11 ativos = 12 total
+
+            // FILTRA ATIVOS QUE CABEM NO ORÇAMENTO
+            let ativosDisponiveis = carteiraCompleta.filter(ativo => {
+                if (filtroAtual!== 'todos' && ativo.categoria!== filtroAtual) return false;
+                return ativo.aplicacaoMinima <= valorInvestir;
+            });
+
+            // ALOCAÇÃO: COMPRA MÁXIMO DE COTAS DO MAIS BARATO
+            let carteiraFinal = [];
+            let valorRestante = valorInvestir;
+
+            for (let i = 0; i < ativosDisponiveis.length && carteiraFinal.length < maxAtivos && valorRestante > 0; i++) {
+                const ativo = ativosDisponiveis[i];
+
+                let quantidade = Math.floor(valorRestante / ativo.aplicacaoMinima);
+                if (quantidade === 0) continue;
+
+                if (ativo.categoria === 'Fundo') quantidade = 1;
+
+                let valorAlocado = quantidade * ativo.aplicacaoMinima;
+
+                if (valorAlocado > valorRestante) continue;
+
+                carteiraFinal.push({
+                  ...ativo,
+                    quantidade: quantidade,
+                    valorAlocado: valorAlocado
+                });
+
+                valorRestante -= valorAlocado;
+            }
+
+            // MOSTRA RESULTADO
+            aviso.innerHTML = `<i data-lucide="${liquidezSelecionada === 'porquinho'? 'piggy-bank' : 'wallet'}" class="w-3 h-3 inline"></i> Reserva: ${valorLiquidez.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} em ${nomeLiquidez} | Investindo: ${(valorInvestir - valorRestante).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} | Sobra: ${valorRestante.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`;
             aviso.className = `text-xs text-${corLiquidez}-400 bg-${corLiquidez}-500/10 p-2 rounded border border-${corLiquidez}-500/20 mt-2`;
             aviso.classList.remove('hidden');
-            
-            // DEFINE QUANTOS ATIVOS MOSTRAR BASEADO NO VALOR
-            let maxAtivos;
-            if (valorTotal < 500) maxAtivos = 3;
-            else if (valorTotal < 2000) maxAtivos = 5;
-            else if (valorTotal < 10000) maxAtivos = 8;
-            else maxAtivos = 12;
-            
-            // FILTRA ATIVOS: TEM QUE TER GRANA PRA APLICAÇÃO MÍNIMA
-            let carteiraFiltrada = carteiraCompleta.filter(ativo => {
-                if (filtroAtual !== 'todos' && ativo.categoria !== filtroAtual) return false;
-                
-                // Calcula quanto vai pra esse ativo
-                const valorProAtivo = valorInvestir * (ativo.alocacao / 100);
-                
-                // SÓ MOSTRA SE O VALOR ALOCADO >= APLICAÇÃO MÍNIMA
-                return valorProAtivo >= ativo.aplicacaoMinima;
-            });
-            
-            // Ordena por prioridade e limita quantidade
-            carteiraFiltrada.sort((a, b) => a.prioridade - b.prioridade || a.preco - b.preco);
-            carteiraFiltrada = carteiraFiltrada.slice(0, maxAtivos);
-            
+
             let listaHTML = '';
-            
-            carteiraFiltrada.forEach((ativo, index) => {
-                const valorInvestirAtivo = valorInvestir * (ativo.alocacao / 100);
-                const id = `${ativo.nome.replace(/[^a-zA-Z0-9]/g, '')}-${index}`;
-                
-                listaHTML += `
-                    <div class="bg-slate-950 rounded-xl border border-slate-900 overflow-hidden">
-                        <div class="p-4 cursor-pointer" onclick="toggleCard('${id}')">
-                            <div class="flex justify-between items-start mb-3">
-                                <div class="flex-1">
-                                    <h3 class="text-sm font-bold text-white mb-0.5">${ativo.nome}</h3>
-                                    <p class="text-xs text-slate-500">${ativo.subtipo || ativo.cnpj || ativo.categoria}</p>
-                                </div>
-                                <i id="icon-${id}" data-lucide="chevron-down" class="w-5 h-5 text-cyan-500 transition-transform"></i>
-                            </div>
-                            
-                            <div class="space-y-2">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-xs text-slate-500 flex items-center gap-1">
-                                        % da Carteira <i data-lucide="info" class="w-3 h-3"></i>
-                                    </span>
-                                    <span class="text-sm font-bold text-white">${ativo.alocacao.toFixed(2)}%</span>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-xs text-slate-500 flex items-center gap-1">
-                                        Valor a ser investido <i data-lucide="info" class="w-3 h-3"></i>
-                                    </span>
-                                    <span class="text-sm font-bold text-white">${valorInvestirAtivo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div id="expand-${id}" class="card-expand border-t border-slate-900">
-                            <div class="p-4 space-y-2 bg-black/50">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-xs text-slate-500 flex items-center gap-1">
-                                        Aplicação mínima <i data-lucide="info" class="w-3 h-3"></i>
-                                    </span>
-                                    <span class="text-sm font-semibold text-slate-300">${ativo.aplicacaoMinima.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
-                                </div>
-                                
-                                ${ativo.dy ? `
-                                <div class="flex justify-between items-center">
-                                    <span class="text-xs text-slate-500 flex items-center gap-1">
-                                        Dividend Yield em 12 meses <i data-lucide="info" class="w-3 h-3"></i>
-                                    </span>
-                                    <span class="text-sm font-semibold text-emerald-400">${ativo.dy.toFixed(2)}%</span>
-                                </div>` : ''}
-                                
-                                ${ativo.precoMaximo ? `
-                                <div class="flex justify-between items-center">
-                                    <span class="text-xs text-slate-500 flex items-center gap-1">
-                                        Preço máximo de compra <i data-lucide="info" class="w-3 h-3"></i>
-                                    </span>
-                                    <span class="text-sm font-semibold text-slate-300">${ativo.precoMaximo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
-                                </div>` : ''}
-                                
-                                <div class="flex justify-between items-start pt-2 border-t border-slate-800">
-                                    <span class="text-xs text-slate-500 flex items-center gap-1">
-                                        Onde encontrar <i data-lucide="info" class="w-3 h-3"></i>
-                                    </span>
-                                    <span class="text-xs font-semibold text-slate-300 text-right max-w-[60%]">${ativo.ondeEncontrar}</span>
-                                </div>
-                                
-                                <button class="w-full mt-3 py-2 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-bold hover:bg-cyan-500/20 transition">
-                                    Mais detalhes
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            if (listaHTML === '') {
+
+            if (carteiraFinal.length === 0) {
                 listaHTML = '<p class="text-xs text-amber-400 text-center py-8 bg-amber-500/10 rounded-lg border border-amber-500/20">Valor muito baixo. Mínimo recomendado: R$ 50,00</p>';
+            } else {
+                carteiraFinal.forEach((ativo, index) => {
+                    const id = `${ativo.nome.replace(/[^a-zA-Z0-9]/g, '')}-${index}`;
+
+                    listaHTML += `
+                        <div class="bg-slate-950 rounded-xl border border-slate-900 overflow-hidden">
+                            <div class="p-4 cursor-pointer" onclick="toggleCard('${id}')">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div class="flex-1">
+                                        <h3 class="text-sm font-bold text-white mb-0.5">${ativo.nome}</h3>
+                                        <p class="text-xs text-slate-500">${ativo.subtipo || ativo.cnpj || ativo.categoria}</p>
+                                    </div>
+                                    <i id="icon-${id}" data-lucide="chevron-down" class="w-5 h-5 text-cyan-500 transition-transform"></i>
+                                </div>
+
+                                <div class="space-y-2">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs text-slate-500 flex items-center gap-1">
+                                            Quantidade <i data-lucide="info" class="w-3 h-3"></i>
+                                        </span>
+                                        <span class="text-sm font-bold text-white">${ativo.quantidade} ${ativo.categoria === 'Fundo'? 'cota' : 'cotas'}</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs text-slate-500 flex items-center gap-1">
+                                            Valor a ser investido <i data-lucide="info" class="w-3 h-3"></i>
+                                        </span>
+                                        <span class="text-sm font-bold text-cyan-400">${ativo.valorAlocado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="expand-${id}" class="card-expand border-t border-slate-900">
+                                <div class="p-4 space-y-2 bg-black/50">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs text-slate-500 flex items-center gap-1">
+                                            Preço por cota <i data-lucide="info" class="w-3 h-3"></i>
+                                        </span>
+                                        <span class="text-sm font-semibold text-slate-300">${ativo.aplicacaoMinima.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+                                    </div>
+
+                                    ${ativo.dy? `
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs text-slate-500 flex items-center gap-1">
+                                            Dividend Yield em 12 meses <i data-lucide="info" class="w-3 h-3"></i>
+                                        </span>
+                                        <span class="text-sm font-semibold text-emerald-400">${ativo.dy.toFixed(2)}%</span>
+                                    </div>` : ''}
+
+                                    ${ativo.precoMaximo? `
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs text-slate-500 flex items-center gap-1">
+                                            Preço máximo de compra <i data-lucide="info" class="w-3 h-3"></i>
+                                        </span>
+                                        <span class="text-sm font-semibold text-slate-300">${ativo.precoMaximo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+                                    </div>` : ''}
+
+                                    <div class="flex justify-between items-start pt-2 border-t border-slate-800">
+                                        <span class="text-xs text-slate-500 flex items-center gap-1">
+                                            Onde encontrar <i data-lucide="info" class="w-3 h-3"></i>
+                                        </span>
+                                        <span class="text-xs font-semibold text-slate-300 text-right max-w-[60%]">${ativo.ondeEncontrar}</span>
+                                    </div>
+
+                                    <button class="w-full mt-3 py-2 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-bold hover:bg-cyan-500/20 transition">
+                                        Mais detalhes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
             }
-            
+
             document.getElementById('lista-ativos').innerHTML = listaHTML;
             lucide.createIcons();
         }
-        
+
         async function buscarPrecosCripto() {
             try {
                 const ids = topCryptos.map(c => c.id).join(',');
                 const resposta = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`);
                 const dados = await resposta.json();
-                
+
                 let cryptoHTML = '';
                 topCryptos.forEach(crypto => {
                     const preco = dados[crypto.id]?.usd || 0;
                     const variacao = dados[crypto.id]?.usd_24h_change || 0;
                     const formatado = variacao.toFixed(2) + '%';
-                    const classeVariacao = variacao >= 0 
-                     ? "text-xs font-bold text-emerald-400 flex items-center gap-0.5 bg-emerald-500/10 p-1 px-2 rounded-md border border-emerald-500/20 w-fit"
+                    const classeVariacao = variacao >= 0
+                   ? "text-xs font-bold text-emerald-400 flex items-center gap-0.5 bg-emerald-500/10 p-1 px-2 rounded-md border border-emerald-500/20 w-fit"
                         : "text-xs font-bold text-red-400 flex items-center gap-0.5 bg-red-500/10 p-1 px-2 rounded-md border border-red-500/20 w-fit";
                     const icone = variacao >= 0? 'trending-up' : 'trending-down';
                     const sinal = variacao >= 0? '+' : '';
-                    
+
                     cryptoHTML += `
                         <div class="bg-gradient-to-b from-[#060e22] to-[#02050d] p-3 rounded-xl border border-blue-950/60 relative overflow-hidden group hover:border-cyan-500/30 transition-all duration-300">
                             <div class="flex justify-between items-start mb-2">
@@ -412,6 +408,7 @@
                                 <div class="w-6 h-6 rounded-full flex items-center justify-center" style="background-color: ${crypto.color}20; border: 1px solid ${crypto.color}40; color: ${crypto.color}">
                                     <i data-lucide="activity" class="w-3 h-3"></i>
                                 </div>
+                            </div>
                             <div class="space-y-1">
                                 <div class="text-sm font-black font-logo tracking-wide text-white">$${preco.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
                                 <div class="${classeVariacao}">
@@ -421,7 +418,7 @@
                         </div>
                     `;
                 });
-                
+
                 document.getElementById('crypto-grid').innerHTML = cryptoHTML;
                 lucide.createIcons();
             } catch (erro) {
@@ -429,12 +426,12 @@
                 document.getElementById('crypto-grid').innerHTML = '<p class="text-xs text-red-400 col-span-full text-center py-4">Erro ao carregar criptomoedas</p>';
             }
         }
-        
+
         // Event listeners
         document.getElementById('input-valor-total').addEventListener('input', function() {
             formatarMoeda(this);
         });
-        
+
         // Inicializa
         window.addEventListener('DOMContentLoaded', function() {
             lucide.createIcons();
