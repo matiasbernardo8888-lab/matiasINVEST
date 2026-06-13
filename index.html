@@ -48,21 +48,14 @@
             100% { box-shadow: 0 0 18px rgba(59, 130, 246, 0.8); }
         }
 
-        /* Botão Ultra Agressivo de Alta Conversão (Laranja/Vermelho Incandescente) */
-        .btn-ultra-chamativo {
-            background: linear-gradient(135deg, #f97316, #ef4444);
-            box-shadow: 0 0 30px rgba(239, 68, 68, 0.6);
-            animation: pulse-fire 1.5s infinite;
+        /* Estilo customizado do botão de compra baseado na imagem de referência */
+        .btn-gradiente-principal {
+            background: linear-gradient(135deg, #a855f7, #6366f1);
+            transition: all 0.3s ease;
         }
-        .btn-ultra-chamativo:hover {
-            transform: scale(1.04);
-            background: linear-gradient(135deg, #ea580c, #dc2626);
-            box-shadow: 0 0 45px rgba(239, 68, 68, 0.9);
-        }
-        @keyframes pulse-fire {
-            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-            70% { box-shadow: 0 0 25px 15px rgba(239, 68, 68, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        .btn-gradiente-principal:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(168, 85, 247, 0.5);
         }
     </style>
 </head>
@@ -164,60 +157,112 @@
                 </div>
             </section>
 
-            <!-- 4º: SEÇÃO DO SIMULADOR E BLOQUEIO DA CARTEIRA -->
-            <section id="simulador-carteira" class="reveal bg-slate-950/70 p-5 rounded-2xl border border-purple-950/40 shadow-2xl space-y-4">
-                <div class="flex justify-between items-center border-b border-purple-950/30 pb-3">
+            <!-- 4º: SEÇÃO DO SIMULADOR E BLOQUEIO DA CARTEIRA (MELHORADO COM FOCO EM CONVERSÃO) -->
+            <section id="simulador-carteira" class="reveal bg-[#130d35]/60 p-6 md:p-8 rounded-3xl border border-purple-500/30 shadow-2xl space-y-6">
+                
+                <!-- Título Superior do Simulador -->
+                <div class="flex justify-between items-center border-b border-purple-900/40 pb-4">
                     <div>
-                        <h2 class="text-sm font-bold text-white uppercase tracking-wider font-logo">Simulador de Alocação</h2>
-                        <p class="text-xs text-slate-500">Monte seu plano de aporte</p>
+                        <h2 class="text-base font-extrabold text-white uppercase tracking-wider font-logo">Simulador de Alocação</h2>
+                        <p class="text-xs text-purple-300">Monte seu plano de aporte personalizado</p>
                     </div>
                     <div class="text-right">
-                        <div class="text-[10px] text-slate-500 uppercase font-bold">Aporte Total</div>
-                        <div id="valor-aporte-display" class="text-lg font-black text-cyan-400 font-logo">R$ 0,00</div>
+                        <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Aporte Digitado</div>
+                        <div id="valor-aporte-display" class="text-xl font-black text-cyan-400 font-logo">R$ 0,00</div>
                     </div>
                 </div>
 
+                <!-- Input Grande para Digitar o Valor -->
                 <div class="space-y-3">
-                    <label class="text-xs font-semibold text-slate-400">Digite o valor que deseja simular:</label>
+                    <label class="text-sm font-bold text-slate-300 block">Digite abaixo o valor que você quer começar a investir:</label>
                     <div class="relative">
-                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 font-bold text-sm">R$</span>
-                        <input type="text" id="input-valor-total" placeholder="0,00" class="w-full bg-slate-900/60 border border-purple-950/60 rounded-xl pl-10 pr-4 py-3 text-white font-bold font-logo focus:outline-none focus:border-purple-500 transition">
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-extrabold text-lg">R$</span>
+                        <input type="text" id="input-valor-total" placeholder="Ex: 500,00" class="w-full bg-slate-950/80 border-2 border-purple-900/60 rounded-xl pl-12 pr-4 py-4 text-white text-xl font-black font-logo focus:outline-none focus:border-purple-500 transition shadow-inner">
                     </div>
 
+                    <!-- Botões de Opção da Reserva -->
                     <div class="pt-2">
-                        <label class="text-xs font-semibold text-slate-400 mb-2 block">RESERVA DE LIQUIDEZ D+0</label>
-                        <div class="grid grid-cols-2 gap-2">
-                            <button id="btn-porquinho" onclick="selecionarLiquidez('porquinho')" class="toggle-liquid px-3 py-2.5 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center gap-1.5">
-                                <i data-lucide="piggy-bank" class="w-4 h-4"></i> Porquinho Inter
+                        <label class="text-xs font-bold text-slate-400 mb-2 block uppercase tracking-wide">Onde vai ficar sua Reserva de Emergência?</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button id="btn-porquinho" onclick="selecionarLiquidez('porquinho')" class="toggle-liquid px-4 py-3 rounded-xl text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center gap-1.5 transition">
+                                <i data-lucide="piggy-bank" class="w-4.5 h-4.5"></i> Porquinho Inter
                             </button>
-                            <button id="btn-nubank" onclick="selecionarLiquidez('nubank')" class="toggle-liquid px-3 py-2.5 rounded-lg text-xs font-bold bg-slate-900 text-slate-500 border border-slate-800 flex items-center justify-center gap-1.5">
-                                <i data-lucide="wallet" class="w-4 h-4"></i> Caixinha Nubank
+                            <button id="btn-nubank" onclick="selecionarLiquidez('nubank')" class="toggle-liquid px-4 py-3 rounded-xl text-xs font-bold bg-slate-900 text-slate-500 border border-slate-800 flex items-center justify-center gap-1.5 transition">
+                                <i data-lucide="wallet" class="w-4.5 h-4.5"></i> Caixinha Nubank
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-purple-950/20 border border-purple-500/20 rounded-xl p-5 text-center mt-4 space-y-4">
-                    <div class="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center mx-auto">
-                        <i data-lucide="lock" class="w-5 h-5 text-purple-400"></i>
+                <!-- BLOCO DE PAGAMENTO TOTALMENTE REFORMULADO (ESTILO IMAGE_2.PNG) -->
+                <div class="bg-[#0b061f] border border-purple-500/40 rounded-2xl p-6 md:p-8 text-center space-y-6 shadow-2xl relative overflow-hidden">
+                    
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-[11px] font-black tracking-widest text-purple-300 uppercase mx-auto">
+                        <span class="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse"></span>
+                        OFERTA DE LANÇAMENTO
                     </div>
+
                     <div>
-                        <h3 class="text-sm font-bold text-white">Resultados da Simulação Bloqueados</h3>
-                        <p class="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
-                            Compre o acesso à minha carteira privada para liberar instantaneamente as porcentagens e ativos recomendados.
+                        <h3 class="text-xl md:text-2xl font-black text-white tracking-tight">
+                            Acesso Completo ao Simulador Automatizado
+                        </h3>
+                    </div>
+
+                    <!-- Explicativo Claro com Fontes Maiores -->
+                    <div class="text-left space-y-3 max-w-md mx-auto py-2">
+                        <div class="flex items-start gap-3">
+                            <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center mt-0.5 flex-shrink-0">
+                                <i data-lucide="check" class="w-3..5 h-3.5 text-purple-400 font-bold"></i>
+                            </div>
+                            <p class="text-sm md:text-base text-slate-300 font-medium">
+                                <strong class="text-white">Você não precisa entender nada:</strong> Só digite o valor que tem disponível.
+                            </p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center mt-0.5 flex-shrink-0">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 font-bold"></i>
+                            </div>
+                            <p class="text-sm md:text-base text-slate-300 font-medium">
+                                <strong class="text-white">Divisão Automática:</strong> O site calcula na hora a diversificação ideal para você.
+                            </p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center mt-0.5 flex-shrink-0">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-purple-400 font-bold"></i>
+                            </div>
+                            <p class="text-sm md:text-base text-slate-300 font-medium">
+                                <strong class="text-white">Nome do Investimento e do Banco:</strong> Ele te dá o nome exato do ativo e em qual banco achar. É só copiar e aplicar!
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Bloco de Preço Idêntico ao Layout Recomendado -->
+                    <div class="bg-[#140e2d] rounded-2xl p-5 max-w-sm mx-auto border border-purple-900/60">
+                        <p class="text-xs text-slate-400 font-semibold mb-1">
+                            De <span class="line-through text-slate-500">R$ 97</span> · Por apenas
+                        </p>
+                        <div class="text-4xl md:text-5xl font-black text-white font-logo tracking-tight my-1 bg-gradient-to-r from-white via-purple-300 to-white bg-clip-text text-transparent">
+                            R$ 19,90
+                        </div>
+                        <p class="text-[11px] text-purple-300 font-medium tracking-wide mt-1">
+                            Pagamento único · Acesso imediato
                         </p>
                     </div>
                     
-                    <div class="pt-2 border-t border-purple-950/40">
-                        <a href="https://pay.cakto.com.br/3axttkx_925499" class="btn-ultra-chamativo w-full py-4 px-4 rounded-xl text-white flex flex-col items-center justify-center transition-all uppercase tracking-wide">
-                            <span class="text-xs font-bold tracking-widest opacity-90 flex items-center gap-1.5 mb-1">
-                                <i data-lucide="unlock" class="w-4 h-4"></i> LIBERAR ACESSO IMEDIATO POR APENAS
-                            </span>
-                            <span class="text-3xl font-black font-logo tracking-tight">
-                                R$ 19,90
-                            </span>
+                    <!-- Botão de Ação Principal e Limpo -->
+                    <div class="max-w-sm mx-auto pt-2">
+                        <a href="https://pay.cakto.com.br/3axttkx_925499" class="btn-gradiente-principal w-full py-4 px-6 rounded-2xl text-white font-bold text-base md:text-lg flex items-center justify-center gap-2 shadow-xl shadow-purple-500/10 uppercase tracking-wider">
+                            Quero começar agora 
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
                         </a>
                     </div>
+
+                    <!-- Selos de Segurança Inferiores -->
+                    <div class="flex items-center justify-center gap-6 text-[11px] text-slate-500 pt-2 border-t border-purple-950/50">
+                        <span class="flex items-center gap-1"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i> 7 dias de garantia</span>
+                        <span class="flex items-center gap-1"><i data-lucide="lock" class="w-4 h-4 text-purple-500"></i> Pagamento seguro</span>
+                    </div>
+
                 </div>
             </section>
 
@@ -326,11 +371,11 @@
             const btnNubank = document.getElementById('btn-nubank');
 
             if (tipo === 'porquinho') {
-                btnPorquinho.className = "toggle-liquid px-3 py-2.5 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center gap-1.5";
-                btnNubank.className = "toggle-liquid px-3 py-2.5 rounded-lg text-xs font-bold bg-slate-900 text-slate-500 border border-slate-800 flex items-center justify-center gap-1.5";
+                btnPorquinho.className = "toggle-liquid px-4 py-3 rounded-xl text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center gap-1.5 transition";
+                btnNubank.className = "toggle-liquid px-4 py-3 rounded-xl text-xs font-bold bg-slate-900 text-slate-500 border border-slate-800 flex items-center justify-center gap-1.5 transition";
             } else {
-                btnNubank.className = "toggle-liquid px-3 py-2.5 rounded-lg text-xs font-bold bg-purple-500/20 text-purple-400 border border-purple-500/40 flex items-center justify-center gap-1.5";
-                btnPorquinho.className = "toggle-liquid px-3 py-2.5 rounded-lg text-xs font-bold bg-slate-900 text-slate-500 border border-slate-800 flex items-center justify-center gap-1.5";
+                btnNubank.className = "toggle-liquid px-4 py-3 rounded-xl text-xs font-bold bg-purple-500/20 text-purple-400 border border-purple-500/40 flex items-center justify-center gap-1.5 transition";
+                btnPorquinho.className = "toggle-liquid px-4 py-3 rounded-xl text-xs font-bold bg-slate-900 text-slate-500 border border-slate-800 flex items-center justify-center gap-1.5 transition";
             }
         }
 
