@@ -1,3 +1,6 @@
+O script é esse me manda ele já editado 
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -11,28 +14,30 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            scroll-behavior: smooth;
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            scroll-behavior: smooth; 
         }
-       .font-logo { font-family: 'Orbitron', sans-serif; }
+        .font-logo { font-family: 'Orbitron', sans-serif; }
         input[type=number]::-webkit-inner-spin-button,
         input[type=number]::-webkit-outer-spin-button {
           -webkit-appearance: none;
           margin: 0;
         }
-
-       .reveal {
+        
+        /* Classes para o efeito de deslizar ao rolar a página */
+        .reveal {
             opacity: 0;
             transform: translateY(40px);
             transition: all 0.8s ease-out;
         }
-       .reveal.active {
+        .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
 
-       .balao-oferta {
+        /* Balão flutuante piscante/mexendo no header */
+        .balao-oferta {
             animation: float-badge 2.5s ease-in-out infinite, glow-badge 2s alternate infinite;
             background: linear-gradient(135deg, #a855f7, #3b82f6);
         }
@@ -46,12 +51,13 @@
             100% { box-shadow: 0 0 18px rgba(59, 130, 246, 0.8); }
         }
 
-       .btn-ultra-chamativo {
+        /* Botão Ultra Agressivo de Alta Conversão (Laranja/Vermelho Incandescente) */
+        .btn-ultra-chamativo {
             background: linear-gradient(135deg, #f97316, #ef4444);
             box-shadow: 0 0 30px rgba(239, 68, 68, 0.6);
             animation: pulse-fire 1.5s infinite;
         }
-       .btn-ultra-chamativo:hover {
+        .btn-ultra-chamativo:hover {
             transform: scale(1.04);
             background: linear-gradient(135deg, #ea580c, #dc2626);
             box-shadow: 0 0 45px rgba(239, 68, 68, 0.9);
@@ -65,23 +71,25 @@
 </head>
 <body class="bg-gradient-to-b from-[#12072B] via-[#090A1A] to-[#050510] text-slate-100 min-h-screen pb-12">
     <div class="max-w-2xl mx-auto px-4">
-
+        
+        <!-- HEADER COM BALÃO DINÂMICO DE R$ 19,90 -->
         <header class="sticky top-0 z-50 bg-[#12072B]/80 backdrop-blur-md border-b border-purple-950/40 py-4 mb-6 flex justify-between items-center">
             <h1 class="font-logo text-2xl font-black tracking-wider bg-gradient-to-r from-white to-cyan-400 bg-clip-text text-transparent">
                 MATIAS INVEST
             </h1>
-            <a href="https://pay.cakto.com.br/3axttkx_925499" class="balao-oferta text-xs font-black text-white uppercase tracking-wider px-4 py-2 rounded-full flex items-center gap-1.5 transition border-white/20">
+            <a href="https://pay.cakto.com.br/3axttkx_925499" class="balao-oferta text-xs font-black text-white uppercase tracking-wider px-4 py-2 rounded-full flex items-center gap-1.5 transition border border-white/20">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
                 LIBERAR POR R$ 19,90
             </a>
         </header>
 
         <main class="space-y-12">
-
+            
+            <!-- 1º: PERFIL (ESTÁTICO OU INICIAL) -->
             <section class="pt-4 border-b border-purple-950/30 pb-10">
                 <div class="flex flex-col items-center text-center">
                     <div class="w-32 h-32 rounded-full bg-gradient-to-br from-purple-500 via-cyan-500 to-blue-600 p-1 mb-6 shadow-xl shadow-purple-500/10">
-                        <img src="foto.jpg" alt="Bernardo Matias" class="w-full h-full rounded-full object-cover">
+                        <img src="perfil.jpg" alt="Bernardo Matias" class="w-full h-full rounded-full object-cover">
                     </div>
                     <p class="text-cyan-400 text-sm font-medium mb-1">Olá, meu nome é</p>
                     <h1 class="font-logo text-4xl font-black text-white mb-2">Bernardo Matias.</h1>
@@ -92,7 +100,8 @@
                 </div>
             </section>
 
-            <section class="reveal bg-slate-950/60 rounded-2xl p-6 border-purple-950/40 shadow-xl space-y-6 text-center backdrop-blur-sm">
+            <!-- 2º: SEÇÃO PATRIMÔNIO (DESLIZA DAQUI PARA BAIXO) -->
+            <section class="reveal bg-slate-950/60 rounded-2xl p-6 border border-purple-950/40 shadow-xl space-y-6 text-center backdrop-blur-sm">
                 <div>
                     <h2 class="text-xl md:text-2xl font-extrabold text-white tracking-tight">
                         Quer aprender comigo como eu invisto mais de <span class="text-cyan-400">R$ 30.000</span>?
@@ -100,7 +109,8 @@
                     <p class="text-xs text-slate-400 mt-2">Veja abaixo o resultado de uma estratégia aplicada na prática:</p>
                 </div>
 
-                <div class="w-full rounded-xl overflow-hidden border-purple-900/30 bg-slate-900/50 flex items-center justify-center min-h-[200px] shadow-inner">
+                <!-- Imagem do Patrimônio -->
+                <div class="w-full rounded-xl overflow-hidden border border-purple-900/30 bg-slate-900/50 flex items-center justify-center min-h-[200px] shadow-inner">
                     <img src="patrimonio.jpg" alt="Print do Patrimônio" class="w-full h-auto object-cover max-h-[400px]" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="hidden flex-col items-center p-8 text-slate-500">
                         <i data-lucide="image" class="w-12 h-12 mb-2 text-slate-700"></i>
@@ -109,7 +119,8 @@
                 </div>
             </section>
 
-            <section class="reveal bg-gradient-to-r from-purple-950/40 to-slate-950/60 p-6 rounded-2xl border-purple-900/30 space-y-4">
+            <!-- DETALHES COMPLETOS SOBRE A CARTEIRA (NOVO CONTEÚDO) -->
+            <section class="reveal bg-gradient-to-r from-purple-950/40 to-slate-950/60 p-6 rounded-2xl border border-purple-900/30 space-y-4">
                 <h3 class="text-base font-black font-logo text-white tracking-wide flex items-center gap-2">
                     <i data-lucide="info" class="w-5 h-5 text-cyan-400"></i> O QUE VOCÊ VAI RECEBER NA CARTEIRA:
                 </h3>
@@ -124,13 +135,14 @@
                 </div>
             </section>
 
+            <!-- 3º: PILARES DA ESTRATÉGIA -->
             <section class="reveal space-y-4">
                 <h2 class="font-logo text-sm font-bold text-slate-400 tracking-widest uppercase flex items-center gap-3">
                     <div class="h-px w-8 bg-purple-500"></div>
                     Pilares da Estratégia
                 </h2>
                 <div class="space-y-3">
-                    <div class="bg-slate-950/40 p-4 rounded-xl border-purple-950/20">
+                    <div class="bg-slate-950/40 p-4 rounded-xl border border-purple-950/20">
                         <div class="flex items-start gap-4">
                             <div class="w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0">
                                 <i data-lucide="scan-line" class="w-5 h-5 text-cyan-400"></i>
@@ -141,7 +153,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="bg-slate-950/40 p-4 rounded-xl border-purple-950/20">
+                    <div class="bg-slate-950/40 p-4 rounded-xl border border-purple-950/20">
                         <div class="flex items-start gap-4">
                             <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center flex-shrink-0">
                                 <i data-lucide="pie-chart" class="w-5 h-5 text-purple-400"></i>
@@ -155,7 +167,8 @@
                 </div>
             </section>
 
-            <section id="simulador-carteira" class="reveal bg-slate-950/70 p-5 rounded-2xl border-purple-950/40 shadow-2xl space-y-4">
+            <!-- 4º: SEÇÃO DO SIMULADOR E BLOQUEIO DA CARTEIRA -->
+            <section id="simulador-carteira" class="reveal bg-slate-950/70 p-5 rounded-2xl border border-purple-950/40 shadow-2xl space-y-4">
                 <div class="flex justify-between items-center border-b border-purple-950/30 pb-3">
                     <div>
                         <h2 class="text-sm font-bold text-white uppercase tracking-wider font-logo">Simulador de Alocação</h2>
@@ -171,23 +184,24 @@
                     <label class="text-xs font-semibold text-slate-400">Digite o valor que deseja simular:</label>
                     <div class="relative">
                         <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 font-bold text-sm">R$</span>
-                        <input type="text" id="input-valor-total" placeholder="0,00" class="w-full bg-slate-900/60 border-purple-950/60 rounded-xl pl-10 pr-4 py-3 text-white font-bold font-logo focus:outline-none focus:border-purple-500 transition">
+                        <input type="text" id="input-valor-total" placeholder="0,00" class="w-full bg-slate-900/60 border border-purple-950/60 rounded-xl pl-10 pr-4 py-3 text-white font-bold font-logo focus:outline-none focus:border-purple-500 transition">
                     </div>
 
                     <div class="pt-2">
                         <label class="text-xs font-semibold text-slate-400 mb-2 block">RESERVA DE LIQUIDEZ D+0</label>
                         <div class="grid grid-cols-2 gap-2">
-                            <button id="btn-porquinho" onclick="selecionarLiquidez('porquinho')" class="toggle-liquid px-3 py-2.5 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-400 border-amber-500/40 flex items-center justify-center gap-1.5">
+                            <button id="btn-porquinho" onclick="selecionarLiquidez('porquinho')" class="toggle-liquid px-3 py-2.5 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center gap-1.5">
                                 <i data-lucide="piggy-bank" class="w-4 h-4"></i> Porquinho Inter
                             </button>
-                            <button id="btn-nubank" onclick="selecionarLiquidez('nubank')" class="toggle-liquid px-3 py-2.5 rounded-lg text-xs font-bold bg-slate-900 text-slate-500 border-slate-800 flex items-center justify-center gap-1.5">
+                            <button id="btn-nubank" onclick="selecionarLiquidez('nubank')" class="toggle-liquid px-3 py-2.5 rounded-lg text-xs font-bold bg-slate-900 text-slate-500 border border-slate-800 flex items-center justify-center gap-1.5">
                                 <i data-lucide="wallet" class="w-4 h-4"></i> Caixinha Nubank
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-purple-950/20 border-purple-500/20 rounded-xl p-5 text-center mt-4 space-y-4">
+                <!-- CONTÊINER DO CTA ALTERADO E BOTÃO LARANJA/VERMELHO INCANDESCENTE -->
+                <div class="bg-purple-950/20 border border-purple-500/20 rounded-xl p-5 text-center mt-4 space-y-4">
                     <div class="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center mx-auto">
                         <i data-lucide="lock" class="w-5 h-5 text-purple-400"></i>
                     </div>
@@ -197,9 +211,10 @@
                             Compre o acesso à minha carteira privada para liberar instantaneamente as porcentagens e ativos recomendados.
                         </p>
                     </div>
-
+                    
                     <div class="pt-2 border-t border-purple-950/40">
-                        <a href="https://pay.cakto.com.br/3axttkx_925499" class="btn-ultra-chamativo w-full py-4 px-4 rounded-xl text-white flex-col items-center justify-center transition-all uppercase tracking-wide">
+                        <!-- NOVO BOTÃO: TEXTO MENOR EM CIMA, VALOR GIGANTE NO CENTRO -->
+                        <a href="https://pay.cakto.com.br/3axttkx_925499" class="btn-ultra-chamativo w-full py-4 px-4 rounded-xl text-white flex flex-col items-center justify-center transition-all uppercase tracking-wide">
                             <span class="text-xs font-bold tracking-widest opacity-90 flex items-center gap-1.5 mb-1">
                                 <i data-lucide="unlock" class="w-4 h-4"></i> LIBERAR ACESSO IMEDIATO POR APENAS
                             </span>
@@ -211,14 +226,15 @@
                 </div>
             </section>
 
+            <!-- 5º: AVALIAÇÕES E FEEDBACKS DE CLIENTES -->
             <section class="reveal space-y-4">
                 <h2 class="font-logo text-sm font-bold text-slate-400 tracking-widest uppercase flex items-center gap-3">
                     <div class="h-px w-8 bg-purple-500"></div>
                     Avaliações e Resultados
                 </h2>
-
+                
                 <div class="grid grid-cols-1 gap-3">
-                    <div class="bg-slate-950/50 p-4 rounded-xl border-purple-950/10 space-y-2">
+                    <div class="bg-slate-950/50 p-4 rounded-xl border border-purple-950/10 space-y-2">
                         <div class="flex justify-between items-center">
                             <span class="text-xs font-bold text-white">Rodrigo S.</span>
                             <div class="flex text-amber-400">
@@ -234,7 +250,7 @@
                         </p>
                     </div>
 
-                    <div class="bg-slate-950/50 p-4 rounded-xl border-purple-950/10 space-y-2">
+                    <div class="bg-slate-950/50 p-4 rounded-xl border border-purple-950/10 space-y-2">
                         <div class="flex justify-between items-center">
                             <span class="text-xs font-bold text-white">Amanda Costa</span>
                             <div class="flex text-amber-400">
@@ -250,7 +266,7 @@
                         </p>
                     </div>
 
-                    <div class="bg-slate-950/50 p-4 rounded-xl border-purple-950/10 space-y-2">
+                    <div class="bg-slate-950/50 p-4 rounded-xl border border-purple-950/10 space-y-2">
                         <div class="flex justify-between items-center">
                             <span class="text-xs font-bold text-white">Marcos Vinícius</span>
                             <div class="flex text-amber-400">
@@ -276,21 +292,24 @@
     </div>
 
     <script>
+        // Inicializa os ícones do Lucide
         lucide.createIcons();
 
+        // Efeito de rolagem da tela (Scroll Animation - Reveal)
         function reveal() {
             const reveals = document.querySelectorAll(".reveal");
             for (let i = 0; i < reveals.length; i++) {
                 let windowHeight = window.innerHeight;
                 let elementTop = reveals[i].getBoundingClientRect().top;
-                let elementVisible = 100;
-
+                let elementVisible = 100; // Define o ponto em px para ativar a animação
+                
                 if (elementTop < windowHeight - elementVisible) {
                     reveals[i].classList.add("active");
                 }
             }
         }
         window.addEventListener("scroll", reveal);
+        // Executa uma vez no início para elementos que já estão na tela
         window.addEventListener("DOMContentLoaded", reveal);
 
         let liquidezSelecionada = 'porquinho';
@@ -315,11 +334,11 @@
             const btnNubank = document.getElementById('btn-nubank');
 
             if (tipo === 'porquinho') {
-                btnPorquinho.className = "toggle-liquid px-3 py-2.5 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-400 border-amber-500/40 flex items-center justify-center gap-1.5";
-                btnNubank.className = "toggle-liquid px-3 py-2.5 rounded-lg text-xs font-bold bg-slate-900 text-slate-500 border-slate-800 flex items-center justify-center gap-1.5";
+                btnPorquinho.className = "toggle-liquid px-3 py-2.5 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center gap-1.5";
+                btnNubank.className = "toggle-liquid px-3 py-2.5 rounded-lg text-xs font-bold bg-slate-900 text-slate-500 border border-slate-800 flex items-center justify-center gap-1.5";
             } else {
-                btnNubank.className = "toggle-liquid px-3 py-2.5 rounded-lg text-xs font-bold bg-purple-500/20 text-purple-400 border-purple-500/40 flex items-center justify-center gap-1.5";
-                btnPorquinho.className = "toggle-liquid px-3 py-2.5 rounded-lg text-xs font-bold bg-slate-900 text-slate-500 border-slate-800 flex items-center justify-center gap-1.5";
+                btnNubank.className = "toggle-liquid px-3 py-2.5 rounded-lg text-xs font-bold bg-purple-500/20 text-purple-400 border border-purple-500/40 flex items-center justify-center gap-1.5";
+                btnPorquinho.className = "toggle-liquid px-3 py-2.5 rounded-lg text-xs font-bold bg-slate-900 text-slate-500 border border-slate-800 flex items-center justify-center gap-1.5";
             }
         }
 
